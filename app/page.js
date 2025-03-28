@@ -1,103 +1,126 @@
-import Image from "next/image";
+"use client";
+
+import { ThreeDCardDemo } from "@/components/custom/3d-card";
+import MovingBG from "@/components/custom/MovingBG";
+import WorldMapCard from "@/components/custom/WorldMapCard";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch("/api/services");
+        const data = await response.json();
+        setServices(data);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
+      <main className="p-10 text-center">
+        {/* <MovingBG /> */}
+        <h2 className="md:text-4xl text-2xl font-extrabold text-gray-900 dark:text-white">
+          🌟 Empowering Creativity & Community
+        </h2>
+
+        <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mt-4 font-medium">
+          Providing free photography, video production, and digital services for all 
+          <span className="font-bold text-blue-600"> CENTRE☠️ </span> members by 
+          <span className="font-bold text-blue-600"> CENTRE☠️ </span> members.
+        </p>
+
+        <div className="flex justify-center mt-6">
+          <Link
+            href={"/services"}
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out rounded-lg text-white font-semibold shadow-md transform hover:scale-105"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Explore Services
+          </Link>
+        </div>
+
+        {/* Services Grid */}
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {[
+            {
+              title: "📸 Photography & Video",
+              desc: "Professional event coverage & creative video production.",
+              link: "https://t.me/yourchannel",
+              btnText: "Telegram Channel",
+            },
+            {
+              title: "🖼️ Google Photos Upload",
+              desc: "Access high-quality images from our public albums.",
+              link: "https://photos.google.com/youralbum",
+              btnText: "Google Photos",
+            },
+            {
+              title: "🎥 YouTube Videos",
+              desc: "Watch creative content from our YouTube channel.",
+              link: "https://youtube.com/yourchannel",
+              btnText: "YouTube Videos",
+            },
+            {
+              title: "🌍 Community Channels",
+              desc: "Join our Telegram, WhatsApp, and YouTube for updates.",
+              link: "https://chat.whatsapp.com/yourgroup",
+              btnText: "WhatsApp Group",
+            },
+          ].map((service, index) => (
+            <div
+              key={index}
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105"
+            >
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                {service.title}
+              </h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-400">
+                {service.desc}
+              </p>
+              <a
+                href={service.link}
+                target="_blank"
+                className="mt-4 block bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out text-white px-6 py-3 rounded-lg text-sm font-semibold shadow-lg"
+              >
+                {service.btnText}
+              </a>
+            </div>
+          ))}
+        </div>
+
+        {/* 3D Services Section */}
+        <div className="mt-12">
+          {loading ? (
+            <p className="text-gray-600 dark:text-gray-400">Loading services...</p>
+          ) : (
+            <ThreeDCardDemo services={services} />
+          )}
+        </div>
+
+        {/* Explore More Services Button */}
+        <div className="mt-6">
+          <Link
+            href="/services"
+            className="bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out text-white px-6 py-3 rounded-lg font-semibold shadow-md transform hover:scale-105"
           >
-            Read our docs
-          </a>
+            Explore All Services
+          </Link>
+        </div>
+
+        {/* World Map Section */}
+        <div className="mt-12">
+          {/* <WorldMapCard /> */}
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
