@@ -57,8 +57,8 @@ Our platform is **industry-level, scalable, and designed for collaboration**. He
 1. **Fork the Repository** – Click on the `Fork` button
 2. **Clone the Repo** – Run:
    ```bash
-   git clone https://github.com/yourusername/centre-organization.git
-   cd centre-organization
+   git clone https://github.com/nileshkumaryadav1/centre.git
+   cd centre
    ```
 3. **Install Dependencies** – Run:
    ```bash
@@ -72,7 +72,7 @@ Our platform is **industry-level, scalable, and designed for collaboration**. He
 6. **Create a Pull Request (PR)** – Submit your changes for review
 
 ### 🔖 **Issues & Discussions**
-- Found a bug? **Open an issue** [here](https://github.com/yourusername/centre-organization/issues)
+- Found a bug? **Open an issue** [here](https://github.com/nileshkumaryadav1/centre/issues)
 - Have suggestions? **Start a discussion**
 
 ---
@@ -83,10 +83,10 @@ This project is licensed under the **MIT License** – free to use, modify, and 
 ---
 
 ## 💬 Contact & Community
-- **Website:** [Centre Private Limited](https://yourwebsite.com)
+- **Website:** [Centre Private Limited](https://centreorg.vercel.app)
 - **Discord:** Join our tech discussions (link coming soon)
-- **Email:** support@centreorg.com
-- **Twitter/X:** [@CentreOrg](https://twitter.com/centreorg)
+- **Email:** keccentreorg@gmail.com
+- **Instagram:** [@CentreOrg](https://instagram.com/centre_kec1)
 
 ---
 

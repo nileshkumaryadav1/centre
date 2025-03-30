@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, Menu, X, Building2, PenBox } from "lucide-react";
+import { Home, User, Menu, X, Building2, PenBox, User2 } from "lucide-react";
 import { FaCalendar, FaMoneyBill } from "react-icons/fa";
 import Image from "next/image";
 
@@ -26,7 +26,9 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 h-16 transition-all ${
-        scrolled ? "md:backdrop-blur-md md:bg-white/30 md:shadow-md" : "bg-transparent"
+        scrolled
+          ? "md:backdrop-blur-md md:bg-white/30 md:shadow-md"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 h-full flex justify-between items-center">
@@ -46,13 +48,14 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden md:flex space-x-2">
           <NavLink href="/">Home</NavLink>
           <NavLink href="/services">Services</NavLink>
-          <NavLink href="/blog">Blog</NavLink>
-          <NavLink href="/career">Career</NavLink>
           <NavLink href="/calender">Birthday Calender</NavLink>
-          <NavLink href="/about">About</NavLink>
+          <NavLink href="/blog">Blog</NavLink>
+          {/* <NavLink href="/career">Career</NavLink> */}
+          {/* <NavLink href="/about">About</NavLink> */}
+          {/* <NavLink href="/user/dashboard">Dashboard</NavLink> */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -86,12 +89,37 @@ export default function Navbar() {
             </div>
 
             <div className="flex flex-col px-6">
-              <NavItemMobile href="/" icon={<Home size={24} />} label="Home" closeMenu={closeMenu} active={pathname === "/"} />
-              <NavItemMobile href="/services" icon={<Building2 size={24} />} label="Services" closeMenu={closeMenu} active={pathname === "/services"} />
-              <NavItemMobile href="/blog" icon={<PenBox size={24} />} label="Blog" closeMenu={closeMenu} active={pathname === "/blog"} />
-              <NavItemMobile href="/career" icon={<FaMoneyBill size={24} />} label="Career" closeMenu={closeMenu} active={pathname === "/career"} />
-              <NavItemMobile href="/calender" icon={<FaCalendar size={24} />} label="Birthday Calender" closeMenu={closeMenu} active={pathname === "/calender"} />
-              <NavItemMobile href="/about" icon={<User size={24} />} label="About" closeMenu={closeMenu} active={pathname === "/about"} />
+              <NavItemMobile
+                href="/"
+                icon={<Home size={24} />}
+                label="Home"
+                closeMenu={closeMenu}
+                active={pathname === "/"}
+              />
+              <NavItemMobile
+                href="/services"
+                icon={<Building2 size={24} />}
+                label="Services"
+                closeMenu={closeMenu}
+                active={pathname === "/services"}
+              />
+              {/* <NavItemMobile href="/career" icon={<FaMoneyBill size={24} />} label="Career" closeMenu={closeMenu} active={pathname === "/career"} /> */}
+              <NavItemMobile
+                href="/calender"
+                icon={<FaCalendar size={24} />}
+                label="Birthday Calender"
+                closeMenu={closeMenu}
+                active={pathname === "/calender"}
+              />
+              <NavItemMobile
+                href="/blog"
+                icon={<PenBox size={24} />}
+                label="Blog"
+                closeMenu={closeMenu}
+                active={pathname === "/blog"}
+              />
+              {/* <NavItemMobile href="/about" icon={<User size={24} />} label="About" closeMenu={closeMenu} active={pathname === "/about"} /> */}
+              {/* <NavItemMobile href="/user/dashboard" icon={<User2 size={24} />} label="Dashboard" closeMenu={closeMenu} active={pathname === "/user/dashboard"} /> */}
             </div>
           </div>
         </div>
@@ -108,7 +136,9 @@ function NavLink({ href, children }) {
     <Link
       href={href}
       className={`text-lg px-4 px-2 py-1 transition ${
-        isActive ? "text-white hover:text-black font-semibold bg-blue-300 rounded-full" : "text-black hover:text-blue-600"
+        isActive
+          ? "text-white hover:text-black font-semibold bg-blue-300 rounded-full"
+          : "text-black hover:text-blue-600"
       }`}
     >
       {children}

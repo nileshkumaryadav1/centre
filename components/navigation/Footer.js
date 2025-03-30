@@ -17,10 +17,12 @@ const Footer = () => {
         <div className="flex justify-between items-center md:flex-row flex-col gap-2">
           {/* Brand Info */}
           <div className="md:max-w-2/5">
-            <h4 className="text-xl font-semibold text-white text-center">CENTRE☠️</h4>
+            <h4 className="text-xl font-semibold text-white text-center">
+              CENTRE☠️
+            </h4>
             <p className="my-2 text-gray-400 md:w-6/7 text-center">
-              We are a company dedicated to providing top-quality services
-              to CENTRE☠️ members for a better memorable past and bright future.
+              We are a company dedicated to providing top-quality services to
+              CENTRE☠️ members for a better memorable past and bright future.
             </p>
           </div>
 
@@ -35,19 +37,16 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/blog" className="hover:text-blue-400 transition">
+                    Blog
+                  </Link>
+                </li>
+                <li>
                   <Link
                     href="/services"
                     className="hover:text-blue-400 transition"
                   >
                     Services
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/blog"
-                    className="hover:text-blue-400 transition"
-                  >
-                    Blog
                   </Link>
                 </li>
                 <li>
@@ -111,35 +110,38 @@ const Footer = () => {
             <h5 className="text-lg font-semibold text-white">Follow Us</h5>
             <div className="mt-3 flex space-x-4">
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@CentreKEC"
                 target="_blank"
                 className="text-gray-400 hover:text-blue-400 transition text-2xl"
               >
                 <FaYoutube />
               </a>
               <a
-                href="https://web.whatsapp.com"
-                target="_blank"
+                // href="https://web.whatsapp.com"
+                // href="#"
+                // target="_blank"
                 className="text-gray-400 hover:text-blue-400 transition text-2xl"
               >
                 <FaWhatsapp />
               </a>
               <a
-                href="https://facebook.com"
-                target="_blank"
+                // href="https://facebook.com"
+                // href="#"
+                // target="_blank"
                 className="text-gray-400 hover:text-blue-400 transition text-2xl"
               >
                 <FaFacebook />
               </a>
               <a
-                href="https://web.telegram.org/"
-                target="_blank"
+                // href="https://web.telegram.org/"
+                // href="#"
+                // target="_blank"
                 className="text-gray-400 hover:text-blue-400 transition text-2xl"
               >
                 <FaTelegram />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/centre_kec1/"
                 target="_blank"
                 className="text-gray-400 hover:text-blue-400 transition text-2xl"
               >

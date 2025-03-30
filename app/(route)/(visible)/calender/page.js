@@ -38,16 +38,16 @@ export default function BirthdayCalendar() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 p-8">
-      <div className="backdrop-blur-lg bg-white/50 shadow-xl rounded-xl p-6 w-full max-w-xl flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
+    <div className="md:min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200 md:p-8">
+      <div className="backdrop-blur-lg bg-white/50 shadow-xl rounded-xl md:p-6 w-full max-w-2xl flex flex-col items-center justify-center">
+        <h1 className="text-3xl font-extrabold text-center text-gray-800 my-4">
           🎉 Birthday Calendar
         </h1>
         <Calendar
           value={date}
           onChange={setDate}
           tileContent={tileContent}
-          className="border-0 shadow-lg rounded-lg overflow-hidden w-full"
+          className="border-0 shadow-lg rounded-lg overflow-hidden w-full mb-5"
         />
       </div>
     </div>

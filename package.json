@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotted-map": "^2.2.3",
     "framer-motion": "^12.6.2",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.484.0",
     "mongoose": "^8.13.0",
     "motion": "^12.6.2",
