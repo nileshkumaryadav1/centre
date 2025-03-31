@@ -5,6 +5,11 @@ import MovingBG from "@/components/custom/MovingBG";
 import WorldMapCard from "@/components/custom/WorldMapCard";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import MembersPage from "./(route)/(visible)/members/page";
+import { Skeleton } from "@/components/ui/skeleton"
+import { SkeletonCard } from "@/components/custom/SkeletonCard";
+import Blogs from "./(route)/(visible)/blog/page";
+import About from "./(route)/(visible)/about/page";
 
 export default function Home() {
   const [services, setServices] = useState([]);
@@ -27,7 +32,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
-      <main className="p-10 text-center">
+      <main className="md:p-10 p-3 text-center">
         {/* <MovingBG /> */}
         <h2 className="md:text-4xl text-2xl font-extrabold text-gray-900 dark:text-white">
           🌟 Empowering Creativity & Community
@@ -39,40 +44,40 @@ export default function Home() {
           <span className="font-bold text-blue-600"> CENTRE☠️ </span> members.
         </p>
 
-        <div className="flex justify-center mt-6">
+        {/* <div className="flex justify-center mt-6">
           <Link
             href={"/services"}
             className="px-6 py-3 bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out rounded-lg text-white font-semibold shadow-md transform hover:scale-105"
           >
             Explore Services
           </Link>
-        </div>
+        </div> */}
 
         {/* Services Grid */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="md:mt-12 mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {[
             {
               title: "📸 Photography & Video",
-              desc: "Professional event coverage & creative video production.",
-              link: "https://t.me/yourchannel",
+              desc: "Professional photography & creative video production.",
+              // link: "https://t.me/yourchannel",
               btnText: "Telegram Channel",
             },
             {
               title: "🖼️ Google Photos Upload",
               desc: "Access high-quality images from our public albums.",
-              link: "https://photos.google.com/youralbum",
+              // link: "https://photos.google.com/youralbum",
               btnText: "Google Photos",
             },
             {
               title: "🎥 YouTube Videos",
               desc: "Watch creative content from our YouTube channel.",
-              link: "https://youtube.com/yourchannel",
+              link: "https://youtube.com/@CentreKEC",
               btnText: "YouTube Videos",
             },
             {
               title: "🌍 Community Channels",
               desc: "Join our Telegram, WhatsApp, and YouTube for updates.",
-              link: "https://chat.whatsapp.com/yourgroup",
+              // link: "https://chat.whatsapp.com/yourgroup",
               btnText: "WhatsApp Group",
             },
           ].map((service, index) => (
@@ -98,9 +103,13 @@ export default function Home() {
         </div>
 
         {/* 3D Services Section */}
-        <div className="mt-12">
+        <div className="md:mt-12 mt-6">
           {loading ? (
-            <p className="text-gray-600 dark:text-gray-400">Loading services...</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-40">
+              {Array.from({ length: 2 }).map((_, index) => (
+                <SkeletonCard key={index} />
+              ))}
+            </div>
           ) : (
             <ThreeDCardDemo services={services} />
           )}
@@ -114,6 +123,21 @@ export default function Home() {
           >
             Explore All Services
           </Link>
+        </div>
+
+        {/* members section */}
+        <div className="mt-12">
+          <MembersPage />
+        </div>
+
+        {/* Blogs Section */}
+        <div className="mt-12">
+          <Blogs />
+        </div>
+
+        {/* about us section */}
+        <div className="mt-12">
+          <About />
         </div>
 
         {/* World Map Section */}

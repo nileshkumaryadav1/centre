@@ -53,6 +53,7 @@ export default function Navbar() {
           <NavLink href="/services">Services</NavLink>
           <NavLink href="/calender">Birthday Calender</NavLink>
           <NavLink href="/blog">Blog</NavLink>
+          <NavLink href="/members">Members</NavLink>
           {/* <NavLink href="/career">Career</NavLink> */}
           {/* <NavLink href="/about">About</NavLink> */}
           {/* <NavLink href="/user/dashboard">Dashboard</NavLink> */}
@@ -117,6 +118,13 @@ export default function Navbar() {
                 label="Blog"
                 closeMenu={closeMenu}
                 active={pathname === "/blog"}
+              />
+              <NavItemMobile
+                href="/members"
+                icon={<User size={24} />}
+                label="Members"
+                closeMenu={closeMenu}
+                active={pathname === "/members"}
               />
               {/* <NavItemMobile href="/about" icon={<User size={24} />} label="About" closeMenu={closeMenu} active={pathname === "/about"} /> */}
               {/* <NavItemMobile href="/user/dashboard" icon={<User2 size={24} />} label="Dashboard" closeMenu={closeMenu} active={pathname === "/user/dashboard"} /> */}

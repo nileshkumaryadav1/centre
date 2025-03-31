@@ -22,7 +22,7 @@ const Footer = () => {
             </h4>
             <p className="my-2 text-gray-400 md:w-6/7 text-center">
               We are a company dedicated to providing top-quality services to
-              CENTRE☠️ members for a better memorable past and bright future.
+              CENTRE☠️ members for a better memorable Life and brighter future.
             </p>
           </div>
 
@@ -124,14 +124,14 @@ const Footer = () => {
               >
                 <FaWhatsapp />
               </a>
-              <a
+              {/* <a
                 // href="https://facebook.com"
                 // href="#"
                 // target="_blank"
                 className="text-gray-400 hover:text-blue-400 transition text-2xl"
               >
                 <FaFacebook />
-              </a>
+              </a> */}
               <a
                 // href="https://web.telegram.org/"
                 // href="#"

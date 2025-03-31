@@ -80,8 +80,8 @@ export default function ManageBlogs() {
       {blogs.map((blog) => (
         <div key={blog._id} className="border p-4 mb-4 rounded-lg shadow">
           <h2 className="text-xl font-semibold">{blog.title}</h2>
-          <div className="w-full h-40 relative mb-2">
-            <img src={blog.imageUrl} alt={blog.title} className="rounded-lg" />
+          <div className="w-full h-50 relative mb-2">
+            <img src={blog.imageUrl} alt={blog.title} className="rounded-lg h-50 w-50" />
           </div>
           <p className="text-gray-700">{blog.content.substring(0, 150)}...</p>
           <p className="text-sm text-gray-500">By {blog.author}</p>
