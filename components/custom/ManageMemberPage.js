@@ -15,6 +15,8 @@ export default function ManageMemberPage() {
     role: "",
     imageUrl: "",
     instagramLink: "",
+    githubLink: "",
+    linkedinLink: "",
   });
 
   const [members, setMembers] = useState([]);
@@ -29,6 +31,8 @@ export default function ManageMemberPage() {
         if (!res.ok) throw new Error("Failed to fetch members");
         const data = await res.json();
         setMembers(data);
+        setLoading(false);
+        router.refresh();
       } catch (err) {
         setError(err.message);
       }
@@ -105,6 +109,14 @@ export default function ManageMemberPage() {
           {memberId ? "Edit Member" : "Add Member"}
         </h2>
 
+        <p className="text-yellow-400">
+          Please fill your form correctly, because you card is going to made by these details. 
+        </p>
+
+        <p className="text-yellow-400 mb-3">
+          Put you profile picture LINK in the image url field.
+        </p>
+
         {error && <p className="text-red-500">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -120,7 +132,7 @@ export default function ManageMemberPage() {
           <textarea
             rows="2"
             name="bio"
-            value={formData.bio}
+            value={formData.bio || ""}
             onChange={handleChange}
             placeholder="Bio"
             className="w-full p-2 border rounded"
@@ -128,7 +140,7 @@ export default function ManageMemberPage() {
           />
           <select
             name="role"
-            value={formData.role}
+            value={formData.role || ""}
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required
@@ -140,7 +152,7 @@ export default function ManageMemberPage() {
           <input
             type="text"
             name="imageUrl"
-            value={formData.imageUrl}
+            value={formData.imageUrl || ""}
             onChange={handleChange}
             placeholder="Image URL"
             className="w-full p-2 border rounded"
@@ -149,9 +161,25 @@ export default function ManageMemberPage() {
           <input
             type="text"
             name="instagramLink"
-            value={formData.instagramLink}
+            value={formData.instagramLink || ""}
             onChange={handleChange}
             placeholder="Instagram Link"
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="githubLink"
+            value={formData.githubLink || ""}
+            onChange={handleChange}
+            placeholder="GitHub Link"
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="linkedinLink"
+            value={formData.linkedinLink || ""}
+            onChange={handleChange}
+            placeholder="LinkedIn Link"
             className="w-full p-2 border rounded"
           />
           <button
@@ -189,9 +217,30 @@ export default function ManageMemberPage() {
                     <h3 className="font-semibold">{member.name}</h3>
                     <p className="text-sm text-gray-600">{member.bio}</p>
                     <p className="text-sm text-gray-600">{member.role}</p>
+                    <a
+                      className="text-sm text-gray-600"
+                      href={member.instagramLink}
+                      target="_blank"
+                    >
+                      {member.instagramLink}
+                    </a>
+                    <a
+                      className="text-sm text-gray-600"
+                      href={member.githubLink}
+                      target="_blank"
+                    >
+                      {member.githubLink}
+                    </a>
+                    <a
+                      className="text-sm text-gray-600"
+                      href={member.linkedinLink}
+                      target="_blank"
+                    >
+                      {member.linkedinLink}
+                    </a>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                {/* <div className="flex gap-2">
                   <Link
                     href={`/admin/members?id=${member._id}`}
                     className="bg-yellow-500 text-white px-3 py-1 rounded"
@@ -204,7 +253,7 @@ export default function ManageMemberPage() {
                   >
                     Delete
                   </button>
-                </div>
+                </div> */}
               </div>
             ))}
           </div>

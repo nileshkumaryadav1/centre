@@ -54,9 +54,9 @@ export default function EditMemberPage() {
         setMember(data);
         setFormData({
           name: data.name,
-          bio: data.bio,
-          role: data.role,
-          imageUrl: data.imageUrl,
+          bio: data.bio || "",
+          role: data.role || "Member",
+          imageUrl: data.imageUrl || "",
           instagramLink: data.instagramLink || "",
           githubLink: data.githubLink || "",
           linkedinLink: data.linkedinLink || "",
@@ -75,7 +75,7 @@ export default function EditMemberPage() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // Handle form submission
+  // form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -84,7 +84,7 @@ export default function EditMemberPage() {
     try {
       const updatedMember = await updateMember(id, formData);
       alert("Member updated successfully!");
-      router.push(`/admin/members`); // Redirect after successful update
+      router.push(`/admin/members`);
     } catch (err) {
       setError(err.message);
     } finally {

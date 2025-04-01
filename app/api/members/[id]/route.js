@@ -14,8 +14,10 @@ export async function PUT(req, { params }) {
     await connectToDatabase();
     try {
         const body = await req.json();
-        const updatedMember = await Member.findByIdAndUpdate(params._id, body, { new: true });
-        return NextResponse.json(updatedMember, { status: 200 });
+        const updatedMember = await Member.findByIdAndUpdate(params.id, body, { new: true });
+        return updatedMember
+            ? NextResponse.json(updatedMember, { status: 200 })
+            : NextResponse.json({ message: "Member not found" }, { status: 404 });
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 400 });
     }
