@@ -139,6 +139,8 @@ export default function ManageMemberPage() {
         <p className="text-yellow-400 mb-3">
           Please fill your details carefully, because your Card is going to be
           made by these details.
+          <br />
+          First upload you image and then fill the form.
         </p>
 
         {error && <p className="text-red-500">{error}</p>}
@@ -291,7 +293,8 @@ export default function ManageMemberPage() {
                         href={member.linkedinLink}
                         target="_blank"
                       >
-                        <FaLinkedin />{member.linkedinLink.split("/")[4]}
+                        <FaLinkedin />
+                        {member.linkedinLink.split("/")[4]}
                       </a>
                     </p>
                   </div>

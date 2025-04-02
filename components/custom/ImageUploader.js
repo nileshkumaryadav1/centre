@@ -41,7 +41,7 @@ export default function ImageUploader() {
     formData.append("upload_preset", "centre"); // 🛑 Replace with your Cloudinary upload preset
 
     try {
-      const response = await fetch(process.env.CLOUDINARY_URL, {
+      const response = await fetch(process.env.NEXT_PUBLIC_CLOUDINARY_URL, {
         method: "POST",
         body: formData,
       });
@@ -67,12 +67,13 @@ export default function ImageUploader() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-5">
+    <section className="flex justify-center items-center p-5">
+    <div className="flex flex-col items-center gap-4 p-5 border rounded bg-gray-100">
       <input
         type="file"
         accept="image/*"
         onChange={handleFileChange}
-        className="border p-2"
+        className="border p-2 rounded cursor-pointer bg-white"
       />
 
       {preview && (
@@ -95,5 +96,6 @@ export default function ImageUploader() {
         {uploading ? "Uploading..." : isUploaded ? "Uploaded" : "Upload"}
       </button>
     </div>
+    </section>
   );
 }
