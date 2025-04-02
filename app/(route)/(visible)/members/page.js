@@ -78,21 +78,21 @@ function MembersPage() {
               <a
                 href={member.instagramLink}
                 target="_blank"
-                className="text-blue-500 hover:text-blue-700 hover:text-4xl text-3xl"
+                className="text-blue-500 hover:text-blue-700 text-3xl"
               >
                 <FaInstagram />
               </a>
               <a
                 href={member.linkedinLink}
                 target="_blank"
-                className="text-blue-500 hover:text-blue-700 hover:text-4xl text-3xl"
+                className="text-blue-500 hover:text-blue-700 text-3xl"
               >
                 <FaLinkedin />
               </a>
               <a
                 href={member.githubLink}
                 target="_blank"
-                className="text-blue-500 hover:text-blue-700 hover:text-4xl text-3xl"
+                className="text-blue-500 hover:text-blue-700 text-3xl"
               >
                 <FaGithub />
               </a>

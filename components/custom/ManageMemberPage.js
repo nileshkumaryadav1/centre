@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import ImageUploader from "./ImageUploader";
+import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function ManageMemberPage() {
   const router = useRouter();
@@ -18,6 +20,31 @@ export default function ManageMemberPage() {
     githubLink: "",
     linkedinLink: "",
   });
+
+  // 📌 Load imageUrl from Local Storage on page load
+  useEffect(() => {
+    const loadImageUrl = () => {
+      const uploadedImageUrl = localStorage.getItem("imageUrl");
+      if (uploadedImageUrl) {
+        setFormData((prev) => ({ ...prev, imageUrl: uploadedImageUrl }));
+      }
+    };
+
+    loadImageUrl();
+
+    // 🔄 Listen for changes in localStorage
+    const handleStorageChange = (event) => {
+      if (event.key === "imageUrl") {
+        window.location.reload(); // Refresh the page when imageUrl changes
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -109,17 +136,41 @@ export default function ManageMemberPage() {
           {memberId ? "Edit Member" : "Add Member"}
         </h2>
 
-        <p className="text-yellow-400">
-          Please fill your form correctly, because you card is going to made by these details. 
-        </p>
-
         <p className="text-yellow-400 mb-3">
-          Put you profile picture LINK in the image url field.
+          Please fill your details carefully, because your Card is going to be
+          made by these details.
         </p>
 
         {error && <p className="text-red-500">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex flex-col border justify-center items-center p-2 gap-2">
+            <div className="hidden">
+              <ImageUploader />
+            </div>
+            <Link
+              href={"/upload"}
+              className="border rounded p-1 bg-blue-500 text-white m-2"
+            >
+              Upload Profile Pic
+            </Link>
+            <input
+              type="text"
+              name="imageUrl"
+              value={formData.imageUrl || ""}
+              onChange={handleChange}
+              placeholder="Image URL"
+              className="w-full p-2 border rounded hidden"
+              required
+            />
+            <img
+              src={
+                formData.imageUrl ||
+                "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+              }
+              className="w-32 h-32 object-cover rounded"
+            />
+          </div>
           <input
             type="text"
             name="name"
@@ -131,6 +182,7 @@ export default function ManageMemberPage() {
           />
           <textarea
             rows="2"
+            type="text"
             name="bio"
             value={formData.bio || ""}
             onChange={handleChange}
@@ -145,19 +197,15 @@ export default function ManageMemberPage() {
             className="w-full p-2 border rounded"
             required
           >
-            <option value="">Select Role</option>
-            <option value="member">Member</option>
-            <option value="admin">Admin</option>
+            <option value="" className="hidden">
+              Select Role
+            </option>
+            <option value="Member">Member</option>
+            <option value="Web-Manager">Web Manager</option>
+            <option value="Video-Manager">Video Manager</option>
+            <option value="Fund-Manager">Fund Manager</option>
+            <option value="Admin">Admin</option>
           </select>
-          <input
-            type="text"
-            name="imageUrl"
-            value={formData.imageUrl || ""}
-            onChange={handleChange}
-            placeholder="Image URL"
-            className="w-full p-2 border rounded"
-            required
-          />
           <input
             type="text"
             name="instagramLink"
@@ -216,28 +264,36 @@ export default function ManageMemberPage() {
                   <div>
                     <h3 className="font-semibold">{member.name}</h3>
                     <p className="text-sm text-gray-600">{member.bio}</p>
-                    <p className="text-sm text-gray-600">{member.role}</p>
-                    <a
-                      className="text-sm text-gray-600"
-                      href={member.instagramLink}
-                      target="_blank"
-                    >
-                      {member.instagramLink}
-                    </a>
-                    <a
-                      className="text-sm text-gray-600"
-                      href={member.githubLink}
-                      target="_blank"
-                    >
-                      {member.githubLink}
-                    </a>
-                    <a
-                      className="text-sm text-gray-600"
-                      href={member.linkedinLink}
-                      target="_blank"
-                    >
-                      {member.linkedinLink}
-                    </a>
+                    <p className="text-sm text-blue-900">{member.role}</p>
+                    <p>
+                      <a
+                        className="text-sm text-blue-600 flex items-center gap-2"
+                        href={member.instagramLink}
+                        target="_blank"
+                      >
+                        <FaInstagram />
+                        {member.instagramLink.split("/")[3]}
+                      </a>
+                    </p>
+                    <p>
+                      <a
+                        className="text-sm text-blue-600 flex items-center gap-2"
+                        href={member.githubLink}
+                        target="_blank"
+                      >
+                        <FaGithub />
+                        {member.githubLink.split("/")[3]}
+                      </a>
+                    </p>
+                    <p>
+                      <a
+                        className="text-sm text-blue-600 flex items-center gap-2"
+                        href={member.linkedinLink}
+                        target="_blank"
+                      >
+                        <FaLinkedin />{member.linkedinLink.split("/")[4]}
+                      </a>
+                    </p>
                   </div>
                 </div>
                 {/* <div className="flex gap-2">

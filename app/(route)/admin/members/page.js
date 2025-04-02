@@ -1,12 +1,12 @@
 "use client";
 
 import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import ManageMemberPage from "@/components/custom/ManageMemberPage";
+import { FaTruckLoading } from "react-icons/fa";
 
 export default function Page() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<FaTruckLoading />}>
       <ManageMemberPage />
     </Suspense>
   );

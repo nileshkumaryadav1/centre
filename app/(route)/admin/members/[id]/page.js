@@ -75,16 +75,14 @@ export default function EditMemberPage() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      const updatedMember = await updateMember(id, formData);
-      alert("Member updated successfully!");
-      router.push(`/admin/members`);
+      await updateMember(id, formData); // Ensure update completes before navigation
+      router.push("/admin/members"); // Navigate after success
     } catch (err) {
       setError(err.message);
     } finally {
