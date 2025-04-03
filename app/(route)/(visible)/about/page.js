@@ -19,8 +19,8 @@ export default function About() {
         transition={{ duration: 0.8 }}
         className="text-center"
       >
-        <h1 className="md:text-4xl text-2xl font-extrabold mb-2">
-          Centre☠️ Private Limited
+        <h1 className="md:text-4xl text-xl font-extrabold mb-2">
+          Centre☠️ Organization
         </h1>
         <p className="text-lg opacity-90">
           🚀 A <strong>student-led, non-profit</strong> tech squad 🤝

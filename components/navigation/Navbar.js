@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, Menu, X, Building2, PenBox, User2 } from "lucide-react";
+import { Home, User, Menu, X, Building2, PenBox, User2, BetweenHorizonalStart } from "lucide-react";
 import { FaCalendar, FaMoneyBill } from "react-icons/fa";
 import Image from "next/image";
 
@@ -99,7 +99,7 @@ export default function Navbar() {
               />
               <NavItemMobile
                 href="/services"
-                icon={<Building2 size={24} />}
+                icon={<BetweenHorizonalStart size={24} />}
                 label="Services"
                 closeMenu={closeMenu}
                 active={pathname === "/services"}

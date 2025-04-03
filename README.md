@@ -36,7 +36,6 @@ Our platform is **industry-level, scalable, and designed for collaboration**. He
 - **Dynamic Home Page** – Showcases all Centre’s services, team, and upcoming events
 - **Authentication System** – Secure login/signup using email/password or OAuth
 - **User Dashboard** – Members can manage their projects, events, and team roles
-- **Events & Hackathons** – List of upcoming and past events with registration options
 - **Blog System** – Members can publish and share blogs
 - **Tech Services Section** – Details about photography, videography, event planning, and more
 - **Gaming & Hackathon Team Page** – Highlights our eSports and competitive programming team

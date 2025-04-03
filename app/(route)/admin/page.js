@@ -15,6 +15,13 @@ export default function Admin() {
       </Link>
 
       <Link
+        href={"/admin/birthday"}
+        className="bg-blue-600 text-white p-3 rounded"
+      >
+        Manage Birthday
+      </Link>
+
+      <Link
         href={"/admin/blogs"}
         className="bg-blue-600 text-white p-3 rounded"
       >

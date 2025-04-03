@@ -137,10 +137,10 @@ export default function ManageMemberPage() {
         </h2>
 
         <p className="text-yellow-400 mb-3">
-          Please fill your details carefully, because your Card is going to be
+          1. Please fill your details carefully, because your Card is going to be
           made by these details.
           <br />
-          First upload you image and then fill the form.
+          2. First upload you image and then fill the form.
         </p>
 
         {error && <p className="text-red-500">{error}</p>}
@@ -213,7 +213,7 @@ export default function ManageMemberPage() {
             name="instagramLink"
             value={formData.instagramLink || ""}
             onChange={handleChange}
-            placeholder="Instagram Link"
+            placeholder="Instagram Link (Optional)"
             className="w-full p-2 border rounded"
           />
           <input
@@ -221,7 +221,7 @@ export default function ManageMemberPage() {
             name="githubLink"
             value={formData.githubLink || ""}
             onChange={handleChange}
-            placeholder="GitHub Link"
+            placeholder="GitHub Link (Optional)"
             className="w-full p-2 border rounded"
           />
           <input
@@ -229,7 +229,7 @@ export default function ManageMemberPage() {
             name="linkedinLink"
             value={formData.linkedinLink || ""}
             onChange={handleChange}
-            placeholder="LinkedIn Link"
+            placeholder="LinkedIn Link (Optional)"
             className="w-full p-2 border rounded"
           />
           <button
@@ -274,7 +274,7 @@ export default function ManageMemberPage() {
                         target="_blank"
                       >
                         <FaInstagram />
-                        {member.instagramLink.split("/")[3]}
+                        {member.instagramLink.slice(22, 40)}
                       </a>
                     </p>
                     <p>
@@ -284,7 +284,7 @@ export default function ManageMemberPage() {
                         target="_blank"
                       >
                         <FaGithub />
-                        {member.githubLink.split("/")[3]}
+                        {member.githubLink.slice(19, 40)}
                       </a>
                     </p>
                     <p>
@@ -294,7 +294,7 @@ export default function ManageMemberPage() {
                         target="_blank"
                       >
                         <FaLinkedin />
-                        {member.linkedinLink.split("/")[4]}
+                        {member.linkedinLink.slice(28, 50)}
                       </a>
                     </p>
                   </div>
