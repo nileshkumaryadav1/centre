@@ -1,5 +1,7 @@
 "use client";
 
+import {Merienda, Unbounded, Audiowide} from "next/font/google";
+
 import { ThreeDCardDemo } from "@/components/custom/3d-card";
 import MovingBG from "@/components/custom/MovingBG";
 import WorldMapCard from "@/components/custom/WorldMapCard";
@@ -10,6 +12,11 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { SkeletonCard } from "@/components/custom/SkeletonCard";
 import Blogs from "./(route)/(visible)/blog/page";
 import About from "./(route)/(visible)/about/page";
+import { BackgroundBeam } from "@/components/custom/BackgroundBeam";
+
+const merienda = Merienda({ weight: "400", subsets: ["latin"] });
+const unbounded = Unbounded({ weight: "400", subsets: ["latin"] });
+const audiowide = Audiowide({ weight: "400", subsets: ["latin"] });
 
 export default function Home() {
   const [services, setServices] = useState([]);
@@ -31,14 +38,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800">
+    <div className={`min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 `}>
       <main className="md:p-10 p-3 text-center">
         {/* <MovingBG /> */}
-        <h2 className="md:text-4xl text-2xl font-extrabold text-gray-900 dark:text-white">
+        <h2 className={`md:text-4xl text-xl font-extrabold text-gray-900 dark:text-white ${audiowide.className}`}>
           🌟 Empowering Creativity & Community
         </h2>
 
-        <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mt-4 font-medium">
+        <p className={`text-md text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mt-4 font-medium ${merienda.className}`}>
           Providing free photography, video production, and digital services for all 
           <span className="font-bold text-blue-600"> CENTRE☠️ </span> members by 
           <span className="font-bold text-blue-600"> CENTRE☠️ </span> members.

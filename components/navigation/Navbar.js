@@ -1,11 +1,16 @@
 "use client";
 
+import { Plaster, Unbounded } from "next/font/google";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, User, Menu, X, Building2, PenBox, User2, BetweenHorizonalStart } from "lucide-react";
 import { FaCalendar, FaMoneyBill } from "react-icons/fa";
 import Image from "next/image";
+
+const unbounded = Unbounded({ weight: "400", subsets: ["latin"] });
+const plaster = Plaster({ weight: "400", subsets: ["latin"] });
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +36,7 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 h-full flex justify-between items-center">
+      <div className={`max-w-6xl mx-auto px-6 h-full flex justify-between items-center  ${unbounded.className}`}>
         {/* Logo */}
         <Image
           src="/logo.jpg"

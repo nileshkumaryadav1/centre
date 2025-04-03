@@ -140,7 +140,7 @@ export default function ManageMemberPage() {
           1. Please fill your details carefully, because your Card is going to be
           made by these details.
           <br />
-          2. First upload you image and then fill the form.
+          2. First upload your image and then fill the form.
         </p>
 
         {error && <p className="text-red-500">{error}</p>}

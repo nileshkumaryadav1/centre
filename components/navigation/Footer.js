@@ -1,3 +1,4 @@
+import { Ubuntu, Unbounded } from "next/font/google";
 import Link from "next/link";
 import {
   FaInstagram,
@@ -10,9 +11,13 @@ import {
   FaTelegram,
 } from "react-icons/fa";
 
+// Load Ubuntu font from Google Fonts
+const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["400", "700"] });
+const unbounded = Unbounded({ subsets: ["latin"], weight: ["400", "700"] });
+
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-8">
+    <footer className={`bg-gray-900 text-gray-300 py-8 ${unbounded.className}`}>
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center md:flex-row flex-col gap-2">
           {/* Brand Info */}
@@ -116,28 +121,10 @@ const Footer = () => {
               >
                 <FaYoutube />
               </a>
-              <a
-                // href="https://web.whatsapp.com"
-                // href="#"
-                // target="_blank"
-                className="text-gray-400 hover:text-blue-400 transition text-2xl"
-              >
+              <a className="text-gray-400 hover:text-blue-400 transition text-2xl">
                 <FaWhatsapp />
               </a>
-              {/* <a
-                // href="https://facebook.com"
-                // href="#"
-                // target="_blank"
-                className="text-gray-400 hover:text-blue-400 transition text-2xl"
-              >
-                <FaFacebook />
-              </a> */}
-              <a
-                // href="https://web.telegram.org/"
-                // href="#"
-                // target="_blank"
-                className="text-gray-400 hover:text-blue-400 transition text-2xl"
-              >
+              <a className="text-gray-400 hover:text-blue-400 transition text-2xl">
                 <FaTelegram />
               </a>
               <a
