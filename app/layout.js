@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/navigation/Footer";
 import MobileNavbar from "@/components/navigation/MobileNavbar";
+import InstallPWAButton from "@/components/custom/InstallButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +23,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={geistSans.className}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#3B82F6" />
+      </head>
       <body>
+        <InstallPWAButton />
         <Navbar />
         <main className="mt-16">{children}</main>
         <MobileNavbar />

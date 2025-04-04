@@ -8,8 +8,8 @@ const MobileNavbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white shadow-lg sm:hidden">
-      <div className="flex justify-around items-center p-3 shadow-md">
+    <nav className="fixed bottom-0 left-0 w-full bg-white shadow-lg border sm:hidden">
+      <div className="flex justify-around items-center p-2 shadow-md">
         <NavItem href="/" icon={Home} label="Home" active={pathname === "/"} />
         <NavItem
           href="/services"
