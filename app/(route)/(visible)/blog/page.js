@@ -66,13 +66,13 @@ export default function Blogs() {
           <input
             type="text"
             placeholder="Search by title or author..."
-            className="w-full md:w-1/2 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full md:w-1/2 p-2 rounded-md border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           <select
-            className="w-full md:w-1/4 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full md:w-1/4 p-2 rounded-md border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
             value={authorFilter}
             onChange={(e) => setAuthorFilter(e.target.value)}
           >

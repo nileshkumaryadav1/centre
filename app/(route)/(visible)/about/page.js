@@ -11,7 +11,7 @@ export default function About() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white p-6 flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white p-6 pb-20 flex flex-col items-center">
       {/* Header Section */}
       <motion.header
         initial={{ opacity: 0, y: -50 }}

@@ -1,53 +1,95 @@
+"use client";
+
+import { AlignJustify } from "lucide-react";
+import { Merienda, Unbounded, Audiowide } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
+
+const merienda = Merienda({ weight: "400", subsets: ["latin"] });
+const unbounded = Unbounded({ weight: "400", subsets: ["latin"] });
+const audiowide = Audiowide({ weight: "400", subsets: ["latin"] });
 
 export default function Hero() {
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <Image
-        className="dark:invert"
-        src="/next.svg"
-        alt="Next.js logo"
-        width={180}
-        height={38}
-        priority
-      />
-      <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-        <li className="mb-2 tracking-[-.01em]">
-          Get started by editing{" "}
-          <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-            app/page.js
-          </code>
-          .
-        </li>
-        <li className="tracking-[-.01em]">
-          Save and see your changes instantly.
-        </li>
-      </ol>
+    <div className="px-4 sm:px-6 md:px-12 md:py-8">
+      {/* Heading */}
+      <h2
+        className={`text-xl sm:text-2xl md:text-4xl text-center font-extrabold text-gray-900 dark:text-white ${audiowide.className} pt-5`}
+      >
+        🌟 Empowering Creativity & Community
+      </h2>
 
-      <div className="flex gap-4 items-center flex-col sm:flex-row">
-        <a
-          className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      {/* Gradient Text Block */}
+      <div className="relative mx-auto flex justify-center w-full md:mt-4">
+        <div className="relative bg-clip-text text-transparent bg-no-repeat bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 md:py-4 pt-2 w-full max-w-xl text-center px-2 sm:px-4">
+          <span className={`${merienda.className} text-sm sm:text-base`}>
+            Providing free photography, video production, and digital services
+            for all{" "}
+            <span className="font-bold text-blue-600"> CENTRE☠️ </span> members
+            by
+            <span className="font-bold text-blue-600"> CENTRE☠️ </span>{" "}
+            members.
+          </span>
+        </div>
+      </div>
+
+      {/* Services Grid */}
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+        {[
+          {
+            title: "📸 Photography & Video",
+            desc: "Professional photography & creative video production.",
+            link: "https://instagram.com/centre_kec1",
+            btnText: "Instagram Page",
+          },
+          {
+            title: "🖼️ Google Photos Upload",
+            desc: "Access high-quality images from our public albums.",
+            btnText: "Google Photos",
+          },
+          {
+            title: "🎥 YouTube Videos",
+            desc: "Watch creative content from our YouTube channel.",
+            link: "https://youtube.com/@CentreKEC",
+            btnText: "YouTube Videos",
+          },
+          {
+            title: "🌍 Community Channels",
+            desc: "Join our Telegram, WhatsApp, and YouTube for updates.",
+            btnText: "WhatsApp Group",
+          },
+        ].map((service, index) => (
+          <div
+            key={index}
+            className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-105"
+          >
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+              {service.title}
+            </h3>
+            <p className="mt-2 text-gray-600 dark:text-gray-400 text-sm sm:text-base">
+              {service.desc}
+            </p>
+            {service.link && (
+              <a
+                href={service.link}
+                target="_blank"
+                className="mt-4 block bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-sm font-semibold shadow-lg text-center"
+              >
+                {service.btnText}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Explore Services Button */}
+      <div className="mt-8 flex justify-center">
+        <Link
+          href="/services"
+          className="bg-blue-600 hover:bg-blue-700 transition duration-300 ease-in-out text-white px-6 py-3 rounded-lg font-semibold shadow-md transform hover:scale-105 text-sm sm:text-base"
         >
-          <Image
-            className="dark:invert"
-            src="/vercel.svg"
-            alt="Vercel logomark"
-            width={20}
-            height={20}
-          />
-          Deploy now
-        </a>
-        <a
-          className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Read our docs
-        </a>
+          Explore All Services
+        </Link>
       </div>
     </div>
   );

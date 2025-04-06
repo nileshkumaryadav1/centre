@@ -60,7 +60,7 @@ function MembersPage() {
   }
 
   return (
-    <div className="p-5 bg-gray-100 md:min-h-screen">
+    <div className="p-5 md:px-10 pb-10 bg-gray-100 md:min-h-screen">
       <h2 className="md:text-3xl text-2xl font-extrabold text-center text-gray-800 mb-4">
         Meet Our Members
       </h2>
@@ -75,13 +75,13 @@ function MembersPage() {
           placeholder="Search members by name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-gray-300 w-full md:w-1/3"
+          className="px-4 py-2 rounded-lg border border-gray-300 bg-white w-full md:w-1/3"
         />
 
         <select
           value={selectedRole}
           onChange={(e) => setSelectedRole(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-gray-300 w-full md:w-1/4"
+          className="px-4 py-2 rounded-lg border border-gray-300 bg-white w-full md:w-1/4"
         >
           {uniqueRoles.map((role, index) => (
             <option key={index} value={role}>
