@@ -45,6 +45,7 @@ export default function Hero() {
           {
             title: "🖼️ Google Photos Upload",
             desc: "Access high-quality images from our public albums.",
+            link: "",
             btnText: "Google Photos",
           },
           {
@@ -56,6 +57,7 @@ export default function Hero() {
           {
             title: "🌍 Community Channels",
             desc: "Join our Telegram, WhatsApp, and YouTube for updates.",
+            link: "",
             btnText: "WhatsApp Group",
           },
         ].map((service, index) => (

@@ -1,3 +1,6 @@
+"use client";
+import React, { useState, useEffect } from "react";
+
 import { Ubuntu, Unbounded } from "next/font/google";
 import Link from "next/link";
 import {
@@ -9,13 +12,24 @@ import {
   FaFacebook,
   FaTwitter,
   FaTelegram,
+  FaApple,
+  FaGooglePlay,
+  FaAndroid,
+  FaMobile,
 } from "react-icons/fa";
 
-// Load Ubuntu font from Google Fonts
 const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["400", "700"] });
 const unbounded = Unbounded({ subsets: ["latin"], weight: ["400", "700"] });
 
 const Footer = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/name-link")
+      .then((res) => res.json())
+      .then((data) => setItems(data));
+  }, []);
+
   return (
     <footer className={`bg-gray-900 text-gray-300 py-8 ${unbounded.className}`}>
       <div className="container mx-auto px-6">
@@ -138,12 +152,32 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* App Download */}
+        <div className="md:mt-8 mt-3 border-t border-gray-700 pt-4 space-y-4 text-center">
+          <h5 className="text-lg font-semibold text-white">Download Our App</h5>
+          {items.map((item) => (
+            <div
+              className="flex items-center justify-center space-x-4"
+              key={item._id}
+            >
+              <a
+                href={item.link}
+                target="_blank"
+                className="text-gray-400 hover:text-blue-400 transition border rounded p-2 text-2xl flex"
+              >
+                {/* <FaMobile /> */}
+                <p className="text-sm">{item.name}</p>
+              </a>
+            </div>
+          ))}
+        </div>
+
         {/* Copyright */}
         <div className="text-center md:mt-8 mt-3 border-t border-gray-700 pt-4 space-y-4">
           <div>
             <img
               src="/logo.jpg"
-              alt="College finder"
+              alt="Centre Organization"
               className="w-12 h-12 rounded-full mx-auto"
             />
           </div>
