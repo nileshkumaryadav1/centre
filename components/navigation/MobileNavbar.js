@@ -52,7 +52,7 @@ const NavItem = ({ href, icon: Icon, label, active }) => {
         }`}
     >
       <Icon size={24} className="mb-1" />
-      {/* <span className="text-xs font-medium">{label}</span> */}
+      <span className="text-xs font-medium">{label}</span>
     </Link>
   );
 };
