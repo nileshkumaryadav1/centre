@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home,  User, Calendar, PenBoxIcon, BetweenHorizonalStart } from "lucide-react";
+import {
+  Home,
+  User,
+  Calendar,
+  PenBoxIcon,
+  BetweenHorizonalStart,
+  Users,
+} from "lucide-react";
 
 const MobileNavbar = () => {
   const pathname = usePathname();
@@ -20,20 +27,20 @@ const MobileNavbar = () => {
         <NavItem
           href="/calender"
           icon={Calendar}
-          label="Birthday Calendar"
+          label="Calendar"
           active={pathname === "/calender"}
         />
         <NavItem
           href="/blog"
           icon={PenBoxIcon}
-          label="Blog"
+          label="C-Blog"
           active={pathname === "/blog"}
         />
         <NavItem
           href="/members"
-          icon={User}
+          icon={Users}
           label="Members"
-          active={pathname === "/members" }
+          active={pathname === "/members"}
         />
       </div>
     </nav>
@@ -44,15 +51,12 @@ const NavItem = ({ href, icon: Icon, label, active }) => {
   return (
     <Link
       href={href}
-      className={`flex flex-col items-center px-4 
-        py-2 transition-all ${
-          active
-            ? "text-blue-400 bg-gray-700 rounded-full px-2 py-2"
-            : "text-gray-900"
-        }`}
+      className={`flex flex-col items-center transition-all p-2 ${
+        active ? "text-blue-400 bg-gray-700 rounded-full" : "text-gray-900"
+      }`}
     >
-      <Icon size={24} className="mb-1" />
-      <span className="text-xs font-medium">{label}</span>
+      <Icon size={20} />
+      <span className="text-xs font-small">{label}</span>
     </Link>
   );
 };

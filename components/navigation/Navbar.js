@@ -5,7 +5,16 @@ import { Plaster, Unbounded } from "next/font/google";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, Menu, X, Building2, PenBox, User2, BetweenHorizonalStart } from "lucide-react";
+import {
+  Home,
+  Users,
+  Menu,
+  X,
+  Building2,
+  PenBox,
+  User2,
+  BetweenHorizonalStart,
+} from "lucide-react";
 import { FaCalendar, FaMoneyBill } from "react-icons/fa";
 import Image from "next/image";
 
@@ -36,15 +45,19 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className={`max-w-6xl mx-auto px-6 h-full flex justify-between items-center  ${unbounded.className}`}>
+      <div
+        className={`max-w-6xl mx-auto px-6 h-full flex justify-between items-center  ${unbounded.className}`}
+      >
         {/* Logo */}
-        <Image
-          src="/logo.jpg"
-          alt="Logo"
-          width={50}
-          height={50}
-          className="w-10 h-10 rounded-full"
-        />
+        <Link href="/">
+          <Image
+            src="/logo.jpg"
+            alt="Logo"
+            width={50}
+            height={50}
+            className="w-10 h-10 rounded-full"
+          />
+        </Link>
         <Link
           href="/"
           className="text-2xl font-bold text-black [text-shadow:_0_4px_8px_rgba(14_165_223_/_0.5)] text-sky-400 leading-snug font-manrope font-extrabold"
@@ -126,7 +139,7 @@ export default function Navbar() {
               />
               <NavItemMobile
                 href="/members"
-                icon={<User size={24} />}
+                icon={<Users size={24} />}
                 label="Members"
                 closeMenu={closeMenu}
                 active={pathname === "/members"}

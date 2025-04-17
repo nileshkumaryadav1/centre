@@ -8,6 +8,6 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   reactStrictMode: true,
   experimental: {
-    optimizeCss: true, // Helps avoid preloading unused CSS
+    optimizeCss: true, // helps to avoid preloading of unused CSS
   },
 });
