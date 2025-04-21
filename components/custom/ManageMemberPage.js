@@ -9,7 +9,7 @@ import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 export default function ManageMemberPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const memberId = searchParams.get("id"); // Use searchParams directly
+  const memberId = searchParams.get("id");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,36 +21,26 @@ export default function ManageMemberPage() {
     linkedinLink: "",
   });
 
-  // 📌 Load imageUrl from Local Storage on page load
-  useEffect(() => {
-    const loadImageUrl = () => {
-      const uploadedImageUrl = localStorage.getItem("imageUrl");
-      if (uploadedImageUrl) {
-        setFormData((prev) => ({ ...prev, imageUrl: uploadedImageUrl }));
-      }
-    };
-
-    loadImageUrl();
-
-    // 🔄 Listen for changes in localStorage
-    const handleStorageChange = (event) => {
-      if (event.key === "imageUrl") {
-        window.location.reload(); // Refresh the page when imageUrl changes
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
-
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Fetch members for management
+  useEffect(() => {
+    const uploadedImageUrl = localStorage.getItem("imageUrl");
+    if (uploadedImageUrl) {
+      setFormData((prev) => ({ ...prev, imageUrl: uploadedImageUrl }));
+    }
+
+    const handleStorageChange = (event) => {
+      if (event.key === "imageUrl") {
+        window.location.reload();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
   useEffect(() => {
     const fetchMembers = async () => {
       try {
@@ -67,10 +57,8 @@ export default function ManageMemberPage() {
     fetchMembers();
   }, []);
 
-  // Fetch member details if editing
   useEffect(() => {
-    if (!memberId) return; // Check if memberId exists
-
+    if (!memberId) return;
     const fetchMemberDetails = async () => {
       try {
         const res = await fetch(`/api/members/${memberId}`);
@@ -118,11 +106,9 @@ export default function ManageMemberPage() {
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this member?")) return;
-
     try {
       const res = await fetch(`/api/members/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete member");
-
       setMembers((prev) => prev.filter((member) => member._id !== id));
     } catch (err) {
       setError(err.message);
@@ -130,29 +116,47 @@ export default function ManageMemberPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10">
+    <div className="max-w-4xl mx-auto mt-10 space-y-10">
+      {/* Profile Card Instruction */}
+      <div className="bg-yellow-50 p-6 border-l-4 border-yellow-400 rounded-md shadow-sm">
+        <h2 className="text-xl font-bold mb-2">📝 Profile Card Instructions</h2>
+        <ul className="list-disc list-inside text-gray-700 space-y-1">
+          <li>💡 First <strong>upload your profile picture</strong>.</li>
+          <li>📸 Make sure your picture is clear and centered (square image works best).</li>
+          <li>✍️ Fill your <strong>name, role, and bio</strong> properly. This will be shown publicly.</li>
+          <li>🌐 You can add your Instagram, GitHub, and LinkedIn links (optional).</li>
+          <li>✅ Click <strong>Add</strong> or <strong>Update</strong> to save your profile.</li>
+        </ul>
+      </div>
+
+      {/* Centre Features Section */}
+      {/* <div className="bg-blue-50 p-6 border-l-4 border-blue-400 rounded-md shadow-sm">
+        <h2 className="text-xl font-bold mb-2">🚀 Centre Features</h2>
+        <ul className="list-disc list-inside text-gray-700 space-y-1">
+          <li>🎥 Dedicated <strong>Video Team</strong> for event recordings and promos.</li>
+          <li>📸 Expert <strong>Photography Unit</strong> capturing every memory.</li>
+          <li>💻 <strong>Tech & Web Team</strong> powering all our digital presence.</li>
+          <li>🎮 Entering the world of <strong>Gaming and Hackathons</strong> under “Centre”.</li>
+          <li>🧠 <strong>Strategy, Planning & Execution</strong> handled by passionate students.</li>
+        </ul>
+      </div> */}
+
+      {/* Form Section */}
       <div className="p-6 bg-white shadow-md rounded-lg">
         <h2 className="text-xl font-bold mb-4">
           {memberId ? "Edit Member" : "Add Member"}
         </h2>
 
-        <p className="text-yellow-400 mb-3">
-          1. Please fill your details carefully, because your Card is going to be
-          made by these details.
-          <br />
-          2. First upload your image and then fill the form.
-        </p>
-
         {error && <p className="text-red-500">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col border justify-center items-center p-2 gap-2">
+          <div className="flex flex-col border justify-center items-center p-4 gap-2">
             <div className="hidden">
               <ImageUploader />
             </div>
             <Link
               href={"/upload"}
-              className="border rounded p-1 bg-blue-500 text-white m-2"
+              className="border rounded p-2 bg-blue-500 text-white"
             >
               Upload Profile Pic
             </Link>
@@ -162,7 +166,7 @@ export default function ManageMemberPage() {
               value={formData.imageUrl || ""}
               onChange={handleChange}
               placeholder="Image URL"
-              className="w-full p-2 border rounded hidden"
+              className="hidden"
               required
             />
             <img
@@ -184,9 +188,8 @@ export default function ManageMemberPage() {
           />
           <textarea
             rows="2"
-            type="text"
             name="bio"
-            value={formData.bio || ""}
+            value={formData.bio}
             onChange={handleChange}
             placeholder="Bio"
             className="w-full p-2 border rounded"
@@ -194,14 +197,12 @@ export default function ManageMemberPage() {
           />
           <select
             name="role"
-            value={formData.role || ""}
+            value={formData.role}
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required
           >
-            <option value="" className="hidden">
-              Select Role
-            </option>
+            <option value="">Select Role</option>
             <option value="Member">Member</option>
             <option value="Web-Manager">Web Manager</option>
             <option value="Video-Manager">Video Manager</option>
@@ -211,7 +212,7 @@ export default function ManageMemberPage() {
           <input
             type="text"
             name="instagramLink"
-            value={formData.instagramLink || ""}
+            value={formData.instagramLink}
             onChange={handleChange}
             placeholder="Instagram Link (Optional)"
             className="w-full p-2 border rounded"
@@ -219,7 +220,7 @@ export default function ManageMemberPage() {
           <input
             type="text"
             name="githubLink"
-            value={formData.githubLink || ""}
+            value={formData.githubLink}
             onChange={handleChange}
             placeholder="GitHub Link (Optional)"
             className="w-full p-2 border rounded"
@@ -227,7 +228,7 @@ export default function ManageMemberPage() {
           <input
             type="text"
             name="linkedinLink"
-            value={formData.linkedinLink || ""}
+            value={formData.linkedinLink}
             onChange={handleChange}
             placeholder="LinkedIn Link (Optional)"
             className="w-full p-2 border rounded"
@@ -242,12 +243,9 @@ export default function ManageMemberPage() {
         </form>
       </div>
 
-      {/* View & Manage Members Section */}
-      <div className="mt-10 p-6 bg-white shadow-md rounded-lg">
+      {/* Members List */}
+      <div className="p-6 bg-white shadow-md rounded-lg">
         <h2 className="text-xl font-bold mb-4">Manage Members</h2>
-
-        {error && <p className="text-red-500">{error}</p>}
-
         {members.length === 0 ? (
           <p className="text-gray-600">No members found.</p>
         ) : (
@@ -255,51 +253,59 @@ export default function ManageMemberPage() {
             {members.map((member) => (
               <div
                 key={member._id}
-                className="flex justify-between items-center bg-gray-100 p-4 rounded-lg"
+                className="flex justify-between items-start bg-gray-100 p-4 rounded-lg"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-start gap-4">
                   <img
                     src={member.imageUrl}
                     alt={member.name}
-                    className="w-12 h-12 rounded-full object-cover border"
+                    className="w-16 h-16 rounded-full object-cover border"
                   />
                   <div>
                     <h3 className="font-semibold">{member.name}</h3>
                     <p className="text-sm text-gray-600">{member.bio}</p>
                     <p className="text-sm text-blue-900">{member.role}</p>
-                    <p>
-                      <a
-                        className="text-sm text-blue-600 flex items-center gap-2"
-                        href={member.instagramLink}
-                        target="_blank"
-                      >
-                        <FaInstagram />
-                        {member.instagramLink.slice(22, 40)}
-                      </a>
-                    </p>
-                    <p>
-                      <a
-                        className="text-sm text-blue-600 flex items-center gap-2"
-                        href={member.githubLink}
-                        target="_blank"
-                      >
-                        <FaGithub />
-                        {member.githubLink.slice(19, 40)}
-                      </a>
-                    </p>
-                    <p>
-                      <a
-                        className="text-sm text-blue-600 flex items-center gap-2"
-                        href={member.linkedinLink}
-                        target="_blank"
-                      >
-                        <FaLinkedin />
-                        {member.linkedinLink.slice(28, 50)}
-                      </a>
-                    </p>
+                    {member.instagramLink && (
+                      <p>
+                        <a
+                          className="text-sm text-pink-500 flex items-center gap-2"
+                          href={member.instagramLink}
+                          target="_blank"
+                        >
+                          <FaInstagram />
+                          {member.instagramLink.slice(22, 40)}
+                        </a>
+                      </p>
+                    )}
+                    {member.githubLink && (
+                      <p>
+                        <a
+                          className="text-sm text-black flex items-center gap-2"
+                          href={member.githubLink}
+                          target="_blank"
+                        >
+                          <FaGithub />
+                          {member.githubLink.slice(19, 40)}
+                        </a>
+                      </p>
+                    )}
+                    {member.linkedinLink && (
+                      <p>
+                        <a
+                          className="text-sm text-blue-700 flex items-center gap-2"
+                          href={member.linkedinLink}
+                          target="_blank"
+                        >
+                          <FaLinkedin />
+                          {member.linkedinLink.slice(28, 50)}
+                        </a>
+                      </p>
+                    )}
                   </div>
                 </div>
-                {/* <div className="flex gap-2">
+                {/* Optional buttons (Edit/Delete) */}
+                {/* 
+                <div className="flex gap-2">
                   <Link
                     href={`/admin/members?id=${member._id}`}
                     className="bg-yellow-500 text-white px-3 py-1 rounded"
@@ -312,7 +318,8 @@ export default function ManageMemberPage() {
                   >
                     Delete
                   </button>
-                </div> */}
+                </div> 
+                */}
               </div>
             ))}
           </div>

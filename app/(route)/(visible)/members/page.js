@@ -14,14 +14,14 @@ function MembersPage() {
 
   useEffect(() => {
     fetch("/api/members")
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
         setMembers(data);
         setFilteredMembers(data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching members:", error);
+      .catch((err) => {
+        console.error("Error fetching members:", err);
         setLoading(false);
       });
   }, []);
@@ -41,47 +41,28 @@ function MembersPage() {
 
   const uniqueRoles = ["All", ...new Set(members.map((m) => m.role))];
 
-  if (loading) {
-    return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 md:gap-40 md:m-20 m-10 gap-4">
-        {Array.from({ length: 2 }).map((_, index) => (
-          <SkeletonCard key={index} />
-        ))}
-      </div>
-    );
-  }
-
-  if (members.length === 0) {
-    return (
-      <div className="text-center text-xl font-bold mt-10">
-        No members found.
-      </div>
-    );
-  }
-
   return (
-    <div className="p-5 md:px-10 pb-10 bg-gray-100 md:min-h-screen">
-      <h2 className="md:text-3xl text-2xl font-extrabold text-center text-gray-800 mb-4">
+    <div className="p-5 md:px-16 pb-10 bg-gray-100 min-h-screen">
+      <h2 className="text-3xl md:text-4xl font-extrabold text-center text-indigo-700 mb-2 tracking-tight">
         Meet Our Members
       </h2>
+      <p className="text-center text-gray-600 mb-6">
+        A glimpse into the amazing Centre crew ✨
+      </p>
 
-      <div className="text-center mb-4 text-lg text-gray-700 font-medium">
-        Total Members: {members.length}
-      </div>
-
-      <div className="flex flex-col md:flex-row gap-4 justify-center items-center mb-6">
+      <div className="flex flex-col md:flex-row gap-4 justify-center items-center mb-8">
         <input
           type="text"
-          placeholder="Search members by name..."
+          placeholder="Search by name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-gray-300 bg-white w-full md:w-1/3"
+          className="px-4 py-2 rounded-lg border border-gray-300 bg-white w-full md:w-1/3 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
 
         <select
           value={selectedRole}
           onChange={(e) => setSelectedRole(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-gray-300 bg-white w-full md:w-1/4"
+          className="px-4 py-2 rounded-lg border border-gray-300 bg-white w-full md:w-1/4 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           {uniqueRoles.map((role, index) => (
             <option key={index} value={role}>
@@ -91,32 +72,41 @@ function MembersPage() {
         </select>
       </div>
 
-      {filteredMembers.length === 0 ? (
-        <p className="text-center text-gray-600">No matching members found.</p>
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 m-10">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </div>
+      ) : filteredMembers.length === 0 ? (
+        <p className="text-center text-gray-600 text-lg font-medium">
+          No matching members found.
+        </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {filteredMembers.map((member) => (
             <div
               key={member._id}
-              className="bg-white shadow-lg hover:shadow-2xl transition-all duration-300 md:p-6 p-4 rounded-xl text-center border border-gray-200"
+              className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 p-6 rounded-xl text-center border border-gray-200 group"
             >
               <img
-                src={member.imageUrl || "logo.jpg"}
+                src={member.imageUrl || "/logo.jpg"}
                 alt={member.name}
-                className="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-indigo-500 shadow-md object-cover"
+                className="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-indigo-500 object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <h3 className="text-xl font-semibold text-gray-900">
+              <h3 className="text-xl font-semibold text-gray-800">
                 {member.name}
               </h3>
-              <p className="text-blue-600">{member.role}</p>
-              <p className="text-gray-600">{member.bio}</p>
+              <p className="text-indigo-600 font-medium">{member.role}</p>
+              <p className="text-gray-600 text-sm mt-1">{member.bio}</p>
 
-              <div className="mt-4 flex justify-center gap-3 text-2xl">
+              <div className="mt-4 flex justify-center gap-4 text-2xl">
                 {member.instagramLink && (
                   <a
                     href={member.instagramLink}
                     target="_blank"
-                    className="text-pink-500 hover:text-pink-700"
+                    rel="noopener noreferrer"
+                    className="text-pink-500 hover:text-pink-700 transition"
                   >
                     <FaInstagram />
                   </a>
@@ -125,7 +115,8 @@ function MembersPage() {
                   <a
                     href={member.linkedinLink}
                     target="_blank"
-                    className="text-blue-500 hover:text-blue-700"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 transition"
                   >
                     <FaLinkedin />
                   </a>
@@ -134,7 +125,8 @@ function MembersPage() {
                   <a
                     href={member.githubLink}
                     target="_blank"
-                    className="text-gray-800 hover:text-gray-900"
+                    rel="noopener noreferrer"
+                    className="text-gray-800 hover:text-black transition"
                   >
                     <FaGithub />
                   </a>
@@ -143,7 +135,7 @@ function MembersPage() {
 
               <Link
                 href={`/members/${member._id}`}
-                className="bg-indigo-600 text-white px-4 py-2 rounded mt-4 block hover:bg-indigo-700 transition duration-200"
+                className="bg-indigo-600 text-white px-4 py-2 rounded mt-5 inline-block hover:bg-indigo-700 transition duration-200"
               >
                 View Profile
               </Link>
@@ -151,6 +143,16 @@ function MembersPage() {
           ))}
         </div>
       )}
+      <div className="text-center mt-4 mb-10">
+        <h3 className="text-xl md:text-2xl font-bold text-gray-700 mb-2">
+          What makes Centre different?
+        </h3>
+        <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
+          We are a group of passionate creators exploring the world of design,
+          dev, content, gaming, events, and beyond. Every member brings a unique
+          spark 🔥 to the team.
+        </p>
+      </div>
     </div>
   );
 }
