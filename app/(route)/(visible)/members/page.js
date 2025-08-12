@@ -4,6 +4,7 @@ import { SkeletonCard } from "@/components/custom/SkeletonCard";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
+import BirthdayCalendar from "../calender/page";
 
 function MembersPage() {
   const [members, setMembers] = useState([]);
@@ -153,6 +154,7 @@ function MembersPage() {
           spark 🔥 to the team.
         </p>
       </div>
+      <BirthdayCalendar />
     </div>
   );
 }

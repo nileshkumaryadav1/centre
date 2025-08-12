@@ -24,12 +24,12 @@ const MobileNavbar = () => {
           label="Services"
           active={pathname === "/services"}
         />
-        <NavItem
+        {/* <NavItem
           href="/calender"
           icon={Calendar}
           label="Calendar"
           active={pathname === "/calender"}
-        />
+        /> */}
         <NavItem
           href="/blog"
           icon={PenBoxIcon}

@@ -5,11 +5,22 @@ import { useState, useEffect } from "react";
 
 export default function Services() {
   const [services, setServices] = useState([]);
-  
+
   useEffect(() => {
     fetch(`/api/services`)
       .then((res) => res.json())
-      .then((data) => setServices(data))
+      .then((data) => {
+        // Add CentreFest service to the fetched data
+        const centreFestService = {
+          id: "centrefest",
+          title: "🎉 CentreFest 2025",
+          description:
+            "Join us for 3 days of fun, learning, and creativity featuring gaming, coding, cultural & literary events with exciting prizes!",
+          imageUrl: "/ad/logo.png",
+          link: "https://centrefest.vercel.app/",
+        };
+        setServices([centreFestService, ...data]);
+      })
       .catch((err) => console.error("Error fetching services:", err));
   }, []);
 

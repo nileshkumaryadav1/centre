@@ -129,7 +129,7 @@ const Footer = () => {
             <h5 className="text-lg font-semibold text-white">Follow Us</h5>
             <div className="mt-3 flex space-x-4">
               <a
-                href="https://www.youtube.com/@CentreKEC"
+                href="https://www.youtube.com/@CentreOrganization"
                 target="_blank"
                 className="text-gray-400 hover:text-blue-400 transition text-2xl"
               >
@@ -142,7 +142,7 @@ const Footer = () => {
                 <FaTelegram />
               </a>
               <a
-                href="https://www.instagram.com/centre_kec1/"
+                href="https://www.instagram.com/CentreOrganization/"
                 target="_blank"
                 className="text-gray-400 hover:text-blue-400 transition text-2xl"
               >

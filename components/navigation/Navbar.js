@@ -69,7 +69,7 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-2">
           <NavLink href="/">Home</NavLink>
           <NavLink href="/services">Services</NavLink>
-          <NavLink href="/calender">Birthday Calender</NavLink>
+          {/* <NavLink href="/calender">Birthday Calender</NavLink> */}
           <NavLink href="/blog">Blog</NavLink>
           <NavLink href="/members">Members</NavLink>
           {/* <NavLink href="/career">Career</NavLink> */}
@@ -123,13 +123,13 @@ export default function Navbar() {
                 active={pathname === "/services"}
               />
               {/* <NavItemMobile href="/career" icon={<FaMoneyBill size={24} />} label="Career" closeMenu={closeMenu} active={pathname === "/career"} /> */}
-              <NavItemMobile
+              {/* <NavItemMobile
                 href="/calender"
                 icon={<FaCalendar size={24} />}
                 label="Birthday Calender"
                 closeMenu={closeMenu}
                 active={pathname === "/calender"}
-              />
+              /> */}
               <NavItemMobile
                 href="/blog"
                 icon={<PenBox size={24} />}
