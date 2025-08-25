@@ -22,24 +22,32 @@ export default function Hero() {
       desc: "Capture your moments with professional-grade photos and cinematic videos.",
       link: "https://instagram.com/CentreOrganization",
       btnText: "View Instagram",
+      image: "/logo.png",
+      highlight: true,
     },
     {
       title: "🖼️ Public Photo Library",
       desc: "Access our curated high-resolution photo albums anytime.",
       link: "https://photos.app.goo.gl/CAhAzzTi7YtzQZsr5",
       btnText: "Google Photos",
+      image: "/logo.png",
+      highlight: true,
     },
     {
       title: "🎥 Creative YouTube Channel",
       desc: "Explore inspiring videos and event highlights from our media team.",
       link: "https://youtube.com/@CentreOrganization",
+      image: "/youtube_logo.png",
       btnText: "Watch on YouTube",
+      highlight: true,
     },
     {
       title: "📱 WhatsApp Community",
       desc: "Stay updated and connect with our community instantly.",
       link: "https://chat.whatsapp.com/JSrqwbsqGz3BnB7zUNrfOE",
       btnText: "Join Now",
+      image: "/logo.png",
+      highlight: true,
     },
   ];
 
@@ -57,9 +65,9 @@ export default function Hero() {
         <div className="relative bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 md:py-4 pt-2 w-full max-w-xl text-center px-2 sm:px-4">
           <p className={`${merienda.className} text-sm sm:text-base`}>
             Free creative and digital services for all{" "}
-            <span className="font-bold text-blue-600">CENTRE☠️</span> members — 
-            by the{" "}
-            <span className="font-bold text-blue-600">CENTRE☠️</span> community.
+            <span className="font-bold text-blue-600">CENTRE☠️</span> members —
+            by the <span className="font-bold text-blue-600">CENTRE☠️</span>{" "}
+            community.
           </p>
         </div>
       </div>
