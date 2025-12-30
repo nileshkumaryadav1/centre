@@ -1,10 +1,11 @@
 "use client";
 
-import MembersPage from "./(route)/(visible)/members/page";
-import Blogs from "./(route)/(visible)/blog/page";
-import About from "./(route)/(visible)/about/page";
-import Services from "./(route)/(visible)/services/page";
 import { BackgroundBeam } from "@/components/custom/BackgroundBeam";
+import WhatWeDo from "@/components/home/WhatWeDo";
+import UpcomingRecentEvents from "@/components/home/UpcomingRecentEvents";
+import ClubsSnapshot from "@/components/home/ClubsSnapshot";
+import WhyJoinUs from "@/components/home/WhyJoinUs";
+import CallToAction from "@/components/home/CallToAction";
 
 export default function Home() {
   return (
@@ -15,17 +16,20 @@ export default function Home() {
         {/* Hero Section */}
         <BackgroundBeam />
 
-        {/* 3D Services Section */}
-        <Services />
+        {/* What do we do? */}
+        <WhatWeDo />
 
-        {/* members section */}
-        <MembersPage />
+        {/* Upcoming / Recent Events */}
+        <UpcomingRecentEvents />
 
-        {/* Blogs Section */}
-        <Blogs />
+        {/* Clubs Snapshot */}
+        <ClubsSnapshot />
 
-        {/* about us section */}
-        <About />
+        {/* Why Join Us */}
+        <WhyJoinUs />
+
+        {/* Call To Action */}
+        <CallToAction />
 
         {/* World Map Section */}
         {/* <WorldMapCard /> */}

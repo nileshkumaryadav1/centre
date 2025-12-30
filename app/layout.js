@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-screen flex flex-col font-sans relative">
         {/* ✅ Popup appears first so it overlays the whole site */}
-        <PopUpForCentreFest />
+        {/* <PopUpForCentreFest /> */}
 
         {/* ✅ Install PWA Button */}
         <InstallPWAButton />

@@ -4,43 +4,46 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  User,
-  Calendar,
-  PenBoxIcon,
-  BetweenHorizonalStart,
-  Users,
+  CalendarDays,
+  UsersRound,
+  UserPlus,
+  PenLine,
 } from "lucide-react";
 
 const MobileNavbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white shadow-lg border sm:hidden">
-      <div className="flex justify-around items-center p-2 shadow-md">
+    <nav className="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-900 border-t shadow-lg sm:hidden">
+      <div className="flex justify-around items-center p-2">
         <NavItem href="/" icon={Home} label="Home" active={pathname === "/"} />
+
         <NavItem
-          href="/services"
-          icon={BetweenHorizonalStart}
-          label="Services"
-          active={pathname === "/services"}
+          href="/events"
+          icon={CalendarDays}
+          label="Events"
+          active={pathname === "/events"}
         />
-        {/* <NavItem
-          href="/calender"
-          icon={Calendar}
-          label="Calendar"
-          active={pathname === "/calender"}
-        /> */}
+
+        <NavItem
+          href="/clubs"
+          icon={UsersRound}
+          label="Clubs"
+          active={pathname === "/clubs"}
+        />
+
+        <NavItem
+          href="/join-us"
+          icon={UserPlus}
+          label="Join Us"
+          active={pathname === "/join-us"}
+        />
+
         <NavItem
           href="/blog"
-          icon={PenBoxIcon}
-          label="C-Blog"
+          icon={PenLine}
+          label="Blogs"
           active={pathname === "/blog"}
-        />
-        <NavItem
-          href="/members"
-          icon={Users}
-          label="Members"
-          active={pathname === "/members"}
         />
       </div>
     </nav>
@@ -51,12 +54,15 @@ const NavItem = ({ href, icon: Icon, label, active }) => {
   return (
     <Link
       href={href}
-      className={`flex flex-col items-center transition-all p-2 ${
-        active ? "text-blue-400 bg-gray-700 rounded-full" : "text-gray-900"
-      }`}
+      className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all
+        ${
+          active
+            ? "text-blue-500 bg-blue-50 dark:bg-gray-800"
+            : "text-gray-700 dark:text-gray-400 hover:text-blue-400"
+        }`}
     >
-      <Icon size={20} />
-      <span className="text-xs font-small">{label}</span>
+      <Icon size={20} strokeWidth={active ? 2.5 : 2} />
+      <span className="text-[11px] font-medium">{label}</span>
     </Link>
   );
 };
