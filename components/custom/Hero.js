@@ -1,10 +1,4 @@
-"use client";
-
-import { Merienda, Audiowide } from "next/font/google";
-
-const merienda = Merienda({ weight: "400", subsets: ["latin"] });
-const audiowide = Audiowide({ weight: "400", subsets: ["latin"] });
-
+import Link from "next/link";
 export default function Hero() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-12 md:py-8">
@@ -21,12 +15,18 @@ export default function Hero() {
       </div>
 
       <div className="flex justify-center gap-4 mt-4">
-        <button className="inline-block px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+        <Link
+          className="inline-block px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+          href="/join-us"
+        >
           Join Us
-        </button>
-        <button className="inline-block px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+        </Link>
+        <Link
+          className="inline-block px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+          href="/events"
+        >
           View Events →
-        </button>
+        </Link>
       </div>
     </div>
   );

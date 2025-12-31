@@ -115,7 +115,7 @@ export default function WhatWeDo() {
       {/* Explore Services Button */}
       <div className="mt-10 flex justify-center">
         <Link
-          href="/services"
+          href="/clubs"
           className="inline-block px-6 py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
         >
           Explore Clubs →

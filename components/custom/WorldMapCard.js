@@ -7,9 +7,9 @@ export default function WorldMapCard() {
     <div className="md:py-40 p-5 dark:bg-black bg-white w-full">
       <div className="max-w-7xl mx-auto text-center">
         <p className="font-bold text-xl md:text-4xl dark:text-white text-black">
-          Lifetime{" "}
+          Global{" "}
           <span className="text-neutral-400">
-            {"Accessibility".split("").map((word, idx) => (
+            {"Exposure".split("").map((word, idx) => (
               <motion.span
                 key={idx}
                 className="inline-block"
@@ -22,7 +22,7 @@ export default function WorldMapCard() {
           </span>
         </p>
         <p className="text-sm md:text-lg text-neutral-500 max-w-2xl mx-auto py-4">
-          CENTRE☠️ is commited for lifetime accessibility of your college life Memories📷.
+          Centre is a student-led non-profit organization that provides tech help and event services.
         </p>
       </div>
       <WorldMap

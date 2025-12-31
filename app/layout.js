@@ -1,10 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navigation/Navbar";
-import Footer from "@/components/navigation/Footer";
-import MobileNavbar from "@/components/navigation/MobileNavbar";
 import InstallPWAButton from "@/components/custom/InstallButton";
 import PopUpForCentreFest from "@/components/ad/PopUpForCentreFest";
+import ClientWrapper from "./client-wrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,20 +33,10 @@ export default function RootLayout({ children }) {
         {/* ✅ Popup appears first so it overlays the whole site */}
         {/* <PopUpForCentreFest /> */}
 
+        <ClientWrapper>{children}</ClientWrapper>
+
         {/* ✅ Install PWA Button */}
         <InstallPWAButton />
-
-        {/* ✅ Main Navigation */}
-        <Navbar />
-
-        {/* ✅ Main Content */}
-        <main className="flex-1 mt-16">{children}</main>
-
-        {/* ✅ Mobile Navigation */}
-        <MobileNavbar />
-
-        {/* ✅ Footer */}
-        <Footer />
       </body>
     </html>
   );

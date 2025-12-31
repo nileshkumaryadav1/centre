@@ -85,7 +85,7 @@ This project is licensed under the **MIT License** – free to use, modify, and 
 - **Website:** [Centre Private Limited](https://centreorg.vercel.app)
 - **Discord:** Join our tech discussions (link coming soon)
 - **Email:** keccentreorg@gmail.com
-- **Instagram:** [@CentreOrg](https://instagram.com/centre_kec1)
+- **Instagram:** [@CentreOrg](https://instagram.com/CentreOrganization)
 
 ---
 

@@ -6,6 +6,7 @@ import UpcomingRecentEvents from "@/components/home/UpcomingRecentEvents";
 import ClubsSnapshot from "@/components/home/ClubsSnapshot";
 import WhyJoinUs from "@/components/home/WhyJoinUs";
 import CallToAction from "@/components/home/CallToAction";
+import WorldMapCard from "@/components/custom/WorldMapCard";
 
 export default function Home() {
   return (

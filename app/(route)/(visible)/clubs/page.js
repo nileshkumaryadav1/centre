@@ -1,37 +1,20 @@
 "use client";
 
-import { ThreeDCardDemo } from "@/components/custom/3d-card";
 import ClubCard from "@/components/custom/ClubCard";
 import { useState, useEffect } from "react";
 
 export default function Clubs() {
-  const [services, setServices] = useState([]);
+  const [clubs, setClubs] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/services`)
+    fetch(`/api/clubs`)
       .then((res) => res.json())
       .then((data) => {
-        // Add CentreFest service to the fetched data
-        const centreFestService = {
-          id: "centrefest",
-          title: "🎉 CentreFest 2025",
-          description:
-            "Join us for 3 days of fun, learning, and creativity featuring gaming, coding, cultural & literary events with exciting prizes!",
-          imageUrl: "/ad/logo.png",
-          link: "https://centrefest.vercel.app/",
-        };
-        setServices([centreFestService, ...data]);
+        setClubs(data);
       })
-      .catch((err) => console.error("Error fetching services:", err));
+      .catch((err) => console.error("Error fetching clubs:", err));
   }, []);
 
-  // if (services.length === 0) {
-  //   return (
-  //     <div className="flex items-center justify-center h-screen">
-  //       <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-600"></div>
-  //     </div>
-  //   );
-  // }
   return (
     <div className="md:min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 flex flex-col items-center justify-center md:p-10 p-4">
       <div className="max-w-5xl w-full space-y-12">
@@ -50,9 +33,9 @@ export default function Clubs() {
         <div className="bg-white/70 dark:bg-gray-900/60 backdrop-blur rounded-2xl p-6 md:p-8 shadow text-center">
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
             Our clubs are designed to help students grow through practice, not
-            theory. Whether you&apos;re a beginner or experienced, each club offers
-            hands-on sessions, mentorship, and opportunities to explore your
-            interests deeply.
+            theory. Whether you&apos;re a beginner or experienced, each club
+            offers hands-on sessions, mentorship, and opportunities to explore
+            your interests deeply.
           </p>
         </div>
 

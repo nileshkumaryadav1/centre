@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-const MemberSchema = new mongoose.Schema(
+const ClubSchema = new mongoose.Schema(
   {
     // ======================
-    // Identity
+    // Basic Info
     // ======================
-    name: {
+    title: {
       type: String,
       required: true,
       trim: true,
@@ -20,23 +20,29 @@ const MemberSchema = new mongoose.Schema(
       index: true,
     },
 
-    role: {
-      type: String,
-      trim: true,
-      default: "Member",
-    },
-
-    bio: {
+    description: {
       type: String,
       required: true,
       trim: true,
       maxlength: 1000,
     },
 
-    birthday: {
-      type: Date,
+    // ======================
+    // Club Details
+    // ======================
+    location: {
+      type: String,
       required: true,
+      trim: true,
     },
+
+    coordinators: [
+      {
+        name: { type: String, required: true },
+        role: { type: String, default: "Coordinator" },
+        email: { type: String },
+      },
+    ],
 
     // ======================
     // Media
@@ -46,19 +52,22 @@ const MemberSchema = new mongoose.Schema(
       required: true,
     },
 
-    // ======================
-    // Social Links
-    // ======================
-    socialLinks: {
-      instagram: { type: String },
-      github: { type: String },
-      linkedin: { type: String },
-      twitter: { type: String },
-      website: { type: String },
+    coverImageUrl: {
+      type: String,
     },
 
     // ======================
-    // Visibility / Control
+    // Links
+    // ======================
+    links: {
+      website: { type: String },
+      instagram: { type: String },
+      linkedin: { type: String },
+      github: { type: String },
+    },
+
+    // ======================
+    // Meta / Control
     // ======================
     isActive: {
       type: Boolean,
@@ -71,25 +80,13 @@ const MemberSchema = new mongoose.Schema(
       default: 0,
     },
 
-    // ======================
-    // Relations (optional)
-    // ======================
-    clubs: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Club",
-      },
-    ],
-
-    // ======================
-    // Meta
-    // ======================
     createdBy: {
-      type: String, // admin email / id
+      type: String, // admin id/email
     },
   },
   { timestamps: true }
 );
 
-// ✅ Prevent duplicate model overwrite
-export default mongoose.models.Member || mongoose.model("Member", MemberSchema);
+// ✅ Prevent model overwrite in dev
+export default mongoose.models.Club ||
+  mongoose.model("Club", ClubSchema);

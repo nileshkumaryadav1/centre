@@ -2,12 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Ubuntu, Unbounded } from "next/font/google";
-import {
-  FaInstagram,
-  FaWhatsapp,
-  FaYoutube,
-  FaTelegram,
-} from "react-icons/fa";
+import { FaInstagram, FaWhatsapp, FaYoutube, FaTelegram } from "react-icons/fa";
 
 const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["400", "700"] });
 const unbounded = Unbounded({ subsets: ["latin"], weight: ["400", "700"] });
@@ -37,9 +32,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h5 className="text-lg font-semibold  mb-3">
-              Quick Links
-            </h5>
+            <h5 className="text-lg font-semibold  mb-3">Quick Links</h5>
             <ul className="space-y-2">
               {[
                 ["Home", "/"],
@@ -47,12 +40,10 @@ const Footer = () => {
                 ["Clubs", "/clubs"],
                 ["Join Us", "/join-us"],
                 ["Blog", "/blog"],
+                ["Members", "/members"],
               ].map(([label, href]) => (
                 <li key={label}>
-                  <Link
-                    href={href}
-                    className="hover:text-blue-400 transition"
-                  >
+                  <Link href={href} className="hover:text-blue-400 transition">
                     {label}
                   </Link>
                 </li>
@@ -62,9 +53,7 @@ const Footer = () => {
 
           {/* Important Links */}
           <div>
-            <h5 className="text-lg font-semibold mb-3">
-              Important Links
-            </h5>
+            <h5 className="text-lg font-semibold mb-3">Important Links</h5>
             <ul className="space-y-2">
               <li>
                 <a
@@ -86,11 +75,11 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://gate2025.iitr.ac.in/"
+                  href="https://gate2026.iitg.ac.in/"
                   target="_blank"
                   className="hover:text-blue-400 transition"
                 >
-                  GATE 2025
+                  GATE 2026
                 </a>
               </li>
             </ul>
@@ -127,9 +116,7 @@ const Footer = () => {
         {/* ================= APP LINKS ================= */}
         {items.length > 0 && (
           <div className="mt-10 border-t border-gray-700 pt-6 text-center">
-            <h5 className="text-lg font-semibold mb-4">
-              Download Our App
-            </h5>
+            <h5 className="text-lg font-semibold mb-4">Download Our App</h5>
             <div className="flex flex-wrap justify-center gap-4">
               {items.map((item) => (
                 <a

@@ -3,22 +3,35 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import ImageUploader from "./ImageUploader";
 import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
+import ImageUploader from "./ImageUploader";
 
 export default function ManageMemberPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const memberId = searchParams.get("id");
 
+  // =========================
+  // FORM STATE (MODEL SYNCED)
+  // =========================
   const [formData, setFormData] = useState({
     name: "",
+    slug: "",
+    role: "Member",
     bio: "",
-    role: "",
+    birthday: "",
     imageUrl: "",
-    instagramLink: "",
-    githubLink: "",
-    linkedinLink: "",
+
+    socialLinks: {
+      instagram: "",
+      github: "",
+      linkedin: "",
+      twitter: "",
+      website: "",
+    },
+
+    isActive: true,
+    priority: 0,
   });
 
   const [members, setMembers] = useState([]);
@@ -30,52 +43,60 @@ export default function ManageMemberPage() {
     if (uploadedImageUrl) {
       setFormData((prev) => ({ ...prev, imageUrl: uploadedImageUrl }));
     }
-
     const handleStorageChange = (event) => {
       if (event.key === "imageUrl") {
         window.location.reload();
       }
     };
-
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+  // =========================
+  // FETCH MEMBERS
+  // =========================
   useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const res = await fetch("/api/members");
-        if (!res.ok) throw new Error("Failed to fetch members");
-        const data = await res.json();
-        setMembers(data);
-        setLoading(false);
-        router.refresh();
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-    fetchMembers();
+    fetch("/api/members")
+      .then((res) => res.json())
+      .then(setMembers)
+      .catch(() => setError("Failed to fetch members"));
   }, []);
 
+  // =========================
+  // FETCH SINGLE MEMBER (EDIT)
+  // =========================
   useEffect(() => {
     if (!memberId) return;
-    const fetchMemberDetails = async () => {
-      try {
-        const res = await fetch(`/api/members/${memberId}`);
-        if (!res.ok) throw new Error("Failed to fetch member details");
-        const data = await res.json();
-        setFormData(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-    fetchMemberDetails();
+
+    fetch(`/api/members/${memberId}`)
+      .then((res) => res.json())
+      .then((data) =>
+        setFormData({
+          ...data,
+          birthday: data.birthday?.slice(0, 10),
+        })
+      )
+      .catch(() => setError("Failed to load member"));
   }, [memberId]);
 
+  // =========================
+  // HANDLERS
+  // =========================
   const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSocialChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      socialLinks: {
+        ...prev.socialLinks,
+        [e.target.name]: e.target.value,
+      },
     }));
   };
 
@@ -85,90 +106,100 @@ export default function ManageMemberPage() {
     setError("");
 
     const method = memberId ? "PUT" : "POST";
-    const endpoint = memberId ? `/api/members/${memberId}` : "/api/members";
+    const url = memberId ? `/api/members/${memberId}` : "/api/members";
 
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      if (!res.ok) throw new Error("Failed to save member");
+      if (!res.ok) throw new Error("Save failed");
 
-      window.location.reload();
-    } catch (err) {
-      setError(err.message);
+      router.push("/admin/members");
+      router.refresh();
+    } catch {
+      setError("Failed to save member");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this member?")) return;
-    try {
-      const res = await fetch(`/api/members/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to delete member");
-      setMembers((prev) => prev.filter((member) => member._id !== id));
-    } catch (err) {
-      setError(err.message);
-    }
+    if (!confirm("Delete this member?")) return;
+
+    await fetch(`/api/members/${id}`, { method: "DELETE" });
+    setMembers((prev) => prev.filter((m) => m._id !== id));
   };
-
+  
+  // =========================
+  // UI
+  // =========================
   return (
-    <div className="max-w-4xl mx-auto mt-10 space-y-10">
-      {/* Profile Card Instruction */}
-      <div className="bg-yellow-50 p-6 border-l-4 border-yellow-400 rounded-md shadow-sm">
-        <h2 className="text-xl font-bold mb-2">📝 Profile Card Instructions</h2>
-        <ul className="list-disc list-inside text-gray-700 space-y-1">
-          <li>💡 First <strong>upload your profile picture</strong>.</li>
-          <li>📸 Make sure your picture is clear and centered (square image works best).</li>
-          <li>✍️ Fill your <strong>name, role, and bio</strong> properly. This will be shown publicly.</li>
-          <li>🌐 You can add your Instagram, GitHub, and LinkedIn links (optional).</li>
-          <li>✅ Click <strong>Add</strong> or <strong>Update</strong> to save your profile.</li>
-        </ul>
-      </div>
-
-      {/* Centre Features Section */}
-      {/* <div className="bg-blue-50 p-6 border-l-4 border-blue-400 rounded-md shadow-sm">
-        <h2 className="text-xl font-bold mb-2">🚀 Centre Features</h2>
-        <ul className="list-disc list-inside text-gray-700 space-y-1">
-          <li>🎥 Dedicated <strong>Video Team</strong> for event recordings and promos.</li>
-          <li>📸 Expert <strong>Photography Unit</strong> capturing every memory.</li>
-          <li>💻 <strong>Tech & Web Team</strong> powering all our digital presence.</li>
-          <li>🎮 Entering the world of <strong>Gaming and Hackathons</strong> under “Centre”.</li>
-          <li>🧠 <strong>Strategy, Planning & Execution</strong> handled by passionate students.</li>
-        </ul>
-      </div> */}
-
-      {/* Form Section */}
-      <div className="p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-5xl mx-auto p-8 space-y-10">
+      {/* ================= FORM ================= */}
+      <div className="bg-white p-6 rounded shadow">
         <h2 className="text-xl font-bold mb-4">
           {memberId ? "Edit Member" : "Add Member"}
         </h2>
 
-        {error && <p className="text-red-500">{error}</p>}
+        {error && <p className="text-red-500 mb-2">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col border justify-center items-center p-4 gap-2">
+        <form onSubmit={handleSubmit} className="grid gap-4">
+          <input
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="input"
+          />
+          <input
+            name="slug"
+            placeholder="Unique Slug (john-doe)"
+            value={formData.slug}
+            onChange={handleChange}
+            required
+            className="input"
+          />
+          <div>
+            <label className="label">Birthday</label>
+            <input
+              type="date"
+              name="birthday"
+              value={formData.birthday}
+              onChange={handleChange}
+              required
+              className="input"
+            />
+          </div>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className="input"
+          >
+            <option>Member</option>
+            <option>Web-Manager</option>
+            <option>Video-Manager</option>
+            <option>Fund-Manager</option>
+            <option>Admin</option>
+          </select>
+          <textarea
+            name="bio"
+            placeholder="Bio"
+            value={formData.bio}
+            onChange={handleChange}
+            required
+            className="input"
+          />
+          {/* PROFILE IMAGE */}
+          <div className="border flex flex-col gap-2 items-center justify-center p-2">
             <div className="hidden">
               <ImageUploader />
             </div>
-            <Link
-              href={"/upload"}
-              className="border rounded p-2 bg-blue-500 text-white"
-            >
-              Upload Profile Pic
-            </Link>
-            <input
-              type="text"
-              name="imageUrl"
-              value={formData.imageUrl || ""}
-              onChange={handleChange}
-              placeholder="Image URL"
-              className="hidden"
-              required
-            />
+
             <img
               src={
                 formData.imageUrl ||
@@ -176,154 +207,128 @@ export default function ManageMemberPage() {
               }
               className="w-32 h-32 object-cover rounded"
             />
+
+            <Link
+              href={"/admin/members/upload"}
+              className="border rounded p-2 bg-blue-500 text-white"
+            >
+              Upload Profile Picture
+            </Link>
+
+            <input
+              name="imageUrl"
+              placeholder="Profile Image URL"
+              value={formData.imageUrl}
+              onChange={handleChange}
+              required
+              className="input"
+            />
           </div>
+          {/* SOCIAL LINKS */}
           <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Name"
-            className="w-full p-2 border rounded"
-            required
-          />
-          <textarea
-            rows="2"
-            name="bio"
-            value={formData.bio}
-            onChange={handleChange}
-            placeholder="Bio"
-            className="w-full p-2 border rounded"
-            required
-          />
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Select Role</option>
-            <option value="Member">Member</option>
-            <option value="Web-Manager">Web Manager</option>
-            <option value="Video-Manager">Video Manager</option>
-            <option value="Fund-Manager">Fund Manager</option>
-            <option value="Admin">Admin</option>
-          </select>
-          <input
-            type="text"
-            name="instagramLink"
-            value={formData.instagramLink}
-            onChange={handleChange}
-            placeholder="Instagram Link (Optional)"
-            className="w-full p-2 border rounded"
+            name="instagram"
+            placeholder="Instagram"
+            value={formData.socialLinks.instagram}
+            onChange={handleSocialChange}
+            className="input"
           />
           <input
-            type="text"
-            name="githubLink"
-            value={formData.githubLink}
-            onChange={handleChange}
-            placeholder="GitHub Link (Optional)"
-            className="w-full p-2 border rounded"
+            name="github"
+            placeholder="GitHub"
+            value={formData.socialLinks.github}
+            onChange={handleSocialChange}
+            className="input"
           />
           <input
-            type="text"
-            name="linkedinLink"
-            value={formData.linkedinLink}
+            name="linkedin"
+            placeholder="LinkedIn"
+            value={formData.socialLinks.linkedin}
+            onChange={handleSocialChange}
+            className="input"
+          />
+          {/* CONTROL */}
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              name="isActive"
+              checked={formData.isActive}
+              onChange={handleChange}
+            />
+            Active Member
+          </label>
+          <input
+            type="number"
+            name="priority"
+            placeholder="Priority"
+            value={formData.priority}
             onChange={handleChange}
-            placeholder="LinkedIn Link (Optional)"
-            className="w-full p-2 border rounded"
+            className="input"
           />
           <button
-            type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded disabled:opacity-50"
             disabled={loading}
+            className="bg-blue-600 text-white py-2 rounded"
           >
-            {loading ? "Saving..." : memberId ? "Update" : "Add"}
+            {loading ? "Saving..." : memberId ? "Update Member" : "Add Member"}
           </button>
         </form>
       </div>
 
-      {/* Members List */}
-      <div className="p-6 bg-white shadow-md rounded-lg">
-        <h2 className="text-xl font-bold mb-4">Manage Members</h2>
-        {members.length === 0 ? (
-          <p className="text-gray-600">No members found.</p>
-        ) : (
-          <div className="grid gap-4">
-            {members.map((member) => (
-              <div
-                key={member._id}
-                className="flex justify-between items-start bg-gray-100 p-4 rounded-lg"
-              >
-                <div className="flex items-start gap-4">
-                  <img
-                    src={member.imageUrl}
-                    alt={member.name}
-                    className="w-16 h-16 rounded-full object-cover border"
-                  />
-                  <div>
-                    <h3 className="font-semibold">{member.name}</h3>
-                    <p className="text-sm text-gray-600">{member.bio}</p>
-                    <p className="text-sm text-blue-900">{member.role}</p>
-                    {member.instagramLink && (
-                      <p>
-                        <a
-                          className="text-sm text-pink-500 flex items-center gap-2"
-                          href={member.instagramLink}
-                          target="_blank"
-                        >
-                          <FaInstagram />
-                          {member.instagramLink.slice(22, 40)}
-                        </a>
-                      </p>
+      {/* ================= LIST ================= */}
+      <div className="bg-white p-6 rounded shadow">
+        <h2 className="text-xl font-bold mb-4">Members</h2>
+
+        <div className="grid gap-4">
+          {members.map((m) => (
+            <div
+              key={m._id}
+              className="flex justify-between bg-gray-100 p-4 rounded"
+            >
+              <div className="flex gap-4">
+                <img
+                  src={m.imageUrl}
+                  className="w-16 h-16 rounded-full object-cover"
+                />
+                <div>
+                  <h3 className="font-semibold">{m.name}</h3>
+                  <p className="text-sm">{m.role}</p>
+
+                  <div className="flex gap-2 mt-1">
+                    {m.socialLinks?.instagram && (
+                      <a href={m.socialLinks.instagram} target="_blank">
+                        <FaInstagram />
+                      </a>
                     )}
-                    {member.githubLink && (
-                      <p>
-                        <a
-                          className="text-sm text-black flex items-center gap-2"
-                          href={member.githubLink}
-                          target="_blank"
-                        >
-                          <FaGithub />
-                          {member.githubLink.slice(19, 40)}
-                        </a>
-                      </p>
+                    {m.socialLinks?.github && (
+                      <a href={m.socialLinks.github} target="_blank">
+                        <FaGithub />
+                      </a>
                     )}
-                    {member.linkedinLink && (
-                      <p>
-                        <a
-                          className="text-sm text-blue-700 flex items-center gap-2"
-                          href={member.linkedinLink}
-                          target="_blank"
-                        >
-                          <FaLinkedin />
-                          {member.linkedinLink.slice(28, 50)}
-                        </a>
-                      </p>
+                    {m.socialLinks?.linkedin && (
+                      <a href={m.socialLinks.linkedin} target="_blank">
+                        <FaLinkedin />
+                      </a>
                     )}
                   </div>
                 </div>
-                {/* Optional buttons (Edit/Delete) */}
-                {/* 
-                <div className="flex gap-2">
-                  <Link
-                    href={`/admin/members?id=${member._id}`}
-                    className="bg-yellow-500 text-white px-3 py-1 rounded"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(member._id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </div> 
-                */}
               </div>
-            ))}
-          </div>
-        )}
+
+              <div className="flex gap-2">
+                <Link
+                  href={`/admin/members?id=${m._id}`}
+                  className="px-3 py-1 bg-yellow-500 text-white rounded"
+                >
+                  Edit
+                </Link>
+                <button
+                  onClick={() => handleDelete(m._id)}
+                  className="px-3 py-1 bg-red-600 text-white rounded"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

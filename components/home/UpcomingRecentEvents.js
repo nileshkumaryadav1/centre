@@ -2,25 +2,15 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { ThreeDCardDemo } from "@/components/custom/3d-card";
 import EventCard from "../custom/EventCard";
 
 export default function UpcomingRecentEvents() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch("/api/services")
+    fetch("/api/events")
       .then((res) => res.json())
       .then((data) => {
-        const centreFest = {
-          id: "centrefest",
-          title: "🎉 CentreFest 2025",
-          description:
-            "3 days of gaming, coding, cultural & literary events with exciting prizes.",
-          imageUrl: "/ad/logo.png",
-          link: "https://centrefest.vercel.app/",
-          type: "upcoming",
-        };
 
         // Take only a few for home showcase
         const limited = data.slice(0, 3).map((item) => ({
@@ -28,7 +18,7 @@ export default function UpcomingRecentEvents() {
           type: "recent",
         }));
 
-        setEvents([centreFest, ...limited]);
+        setEvents(limited);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -50,8 +40,8 @@ export default function UpcomingRecentEvents() {
         {/* ================= CARDS ================= */}
         <div className="flex justify-center gap-6">
           <EventCard
-            title="🎉 CentreFest 2025"
-            date="March 2025"
+            title="🎉 CentreFest 2026"
+            date="March 2026"
             description="A 3-day flagship fest with gaming, coding, cultural & literary events."
             actionLabel="Register Now"
             actionLink="https://centrefest.vercel.app/"
@@ -60,7 +50,7 @@ export default function UpcomingRecentEvents() {
 
           <EventCard
             title="⚙️ Git & GitHub Workshop"
-            date="Jan 2025"
+            date="Oct 2025"
             description="An introductory workshop on version control and collaboration."
             actionLabel="View Recap"
             actionLink="#"
