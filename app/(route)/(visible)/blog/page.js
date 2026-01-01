@@ -38,18 +38,25 @@ export default function Blogs() {
     setFilteredBlogs(filtered);
   }, [searchTerm, authorFilter, blogs]);
 
-  const allAuthors = [...new Set(blogs.map((blog) => blog.author))];
+  const allAuthors = Array.from(
+    new Map(
+      blogs.map((blog) => [
+        blog.author.trim().toLowerCase(), // key (normalized)
+        blog.author.trim(), // value (original display)
+      ])
+    ).values()
+  );
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-600"></div>
+  //     </div>
+  //   );
+  // }
 
   return (
-    <div className="md:min-h-screen bg-gradient-to-b from-gray-50 to-gray-200 py-10">
+    <div className="md:min-h-screen bg-gradient-to-b from-gray-50 to-gray-200 py-10 px-4">
       <div className="max-w-4xl mx-auto">
         <h1 className="md:text-4xl text-2xl font-extrabold text-center text-gray-900">
           📝 Centre Blog
@@ -96,18 +103,22 @@ export default function Blogs() {
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">
                   {blog.title}
                 </h2>
+
                 <div className="text-gray-600 text-sm flex justify-between pr-2">
                   <p>{new Date(blog.createdAt).toDateString()}</p>
                   <p>
                     By{" "}
                     <span className="text-blue-600 font-medium">
                       {blog.author}
-                    </span>{"."}
+                    </span>
+                    .
                   </p>
                 </div>
+
                 <p className="text-gray-700 mt-3">
                   {blog.content.substring(0, 150)}...
                 </p>
+
                 <Link
                   href={`/blog/${blog._id}`}
                   className="inline-block px-6 py-3 rounded-full bg-white text-blue-600 border border-blue-600 font-semibold hover:bg-blue-700 hover:text-white transition mt-4 w-full text-center"
@@ -116,10 +127,15 @@ export default function Blogs() {
                 </Link>
               </div>
             ))
+          ) : loading ? (
+            <div className="col-span-full flex items-center justify-center py-24">
+              Loading...
+              {/* <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-600"></div> */}
+            </div>
           ) : (
-            <p className="text-center text-gray-500 col-span-2">
-              No blogs found.
-            </p>
+            <div className="col-span-full text-center text-gray-500 py-24">
+              No blog found
+            </div>
           )}
         </div>
       </div>

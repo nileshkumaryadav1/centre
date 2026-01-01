@@ -4,7 +4,7 @@ import { Plaster, Unbounded } from "next/font/google";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Users, Menu, X, PenBox } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
 const unbounded = Unbounded({ weight: "400", subsets: ["latin"] });
@@ -13,28 +13,28 @@ const plaster = Plaster({ weight: "400", subsets: ["latin"] });
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 h-16 transition-all ${
-        scrolled
-          ? "md:backdrop-blur-md md:bg-white/70 md:shadow-md"
-          : "bg-transparent"
-      }`}
-    >
-      <div
-        className={`max-w-7xl mx-auto px-6 h-full flex items-center justify-between ${unbounded.className}`}
+    <>
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 h-16 transition-all duration-300
+        ${
+          scrolled
+            ? "backdrop-blur-md bg-white/80 shadow-sm"
+            : "bg-transparent"
+        }`}
       >
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <Link href="/">
+        <div
+          className={`max-w-7xl mx-auto px-6 h-full flex items-center justify-between ${unbounded.className}`}
+        >
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3">
             <Image
               src="/logo.jpg"
               alt="Centre Logo"
@@ -42,64 +42,76 @@ export default function Navbar() {
               height={40}
               className="rounded-full"
             />
+            <span className="text-2xl font-extrabold text-sky-500 tracking-wide">
+              Centre
+            </span>
           </Link>
 
-          <Link
-            href="/"
-            className="text-2xl font-extrabold text-sky-500 tracking-wide"
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-1">
+            <NavLink href="/">Home</NavLink>
+            <NavLink href="/about-us">About Us</NavLink>
+            <NavLink href="/events">Events</NavLink>
+            <NavLink href="/clubs">Clubs</NavLink>
+            <NavLink href="/join-us">Join Us</NavLink>
+            <NavLink href="/contact">Contact</NavLink>
+            <NavLink href="/blog">Blog</NavLink>
+          </div>
+
+          {/* Mobile Toggle */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-black/5 transition"
+            onClick={() => setIsOpen(true)}
+            aria-label="Open menu"
           >
-            CENTRE
-          </Link>
+            <Menu size={26} />
+          </button>
         </div>
+      </nav>
 
-        {/* Desktop Menu (REAL SOURCE) */}
-        <div className="hidden md:flex items-center gap-2">
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/about-us">About Us</NavLink>
-          <NavLink href="/events">Events</NavLink>
-          <NavLink href="/clubs">Clubs</NavLink>
-          <NavLink href="/join-us">Join Us</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
-          <NavLink href="/blog">Blog</NavLink>
-        </div>
+      {/* ================= Mobile Drawer ================= */}
+      <div
+        className={`fixed inset-0 z-40 md:hidden transition-all duration-300
+        ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/40"
+          onClick={() => setIsOpen(false)}
+        />
 
-        {/* Mobile Button */}
-        <button
-          className="md:hidden text-black"
-          onClick={() => setIsOpen(!isOpen)}
+        {/* Drawer */}
+        <div
+          className={`absolute top-0 left-0 h-full w-72 bg-white shadow-xl
+          transform transition-transform duration-300
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
         >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
+          <div className="flex items-center justify-between p-5 border-b">
+            <span className="text-xl font-bold">CENTRE</span>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-2 rounded-lg hover:bg-gray-100"
+            >
+              <X size={22} />
+            </button>
+          </div>
 
-      {/* Mobile Drawer */}
-      {isOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
-          <div
-            className="fixed top-0 left-0 w-64 h-full bg-white shadow-lg"
-          >
-            <div className="flex justify-between items-center p-4 border-b border-gray-700">
-              <p className="text-xl font-bold">CENTRE</p>
-              <button onClick={() => setIsOpen(false)}>
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="flex flex-col p-4 space-y-1">
-              <NavItemMobile href="/" label="Home" />
-              <NavItemMobile href="/about-us" label="About Us" />
-              <NavItemMobile href="/events" label="Events" />
-              <NavItemMobile href="/clubs" label="Clubs" />
-              <NavItemMobile href="/join-us" label="Join Us" />
-              <NavItemMobile href="/contact" label="Contact" />
-              <NavItemMobile href="/blog" label="Blog" />
-            </div>
+          <div className="flex flex-col px-3 py-4 gap-1">
+            <NavItemMobile href="/" label="Home" close={() => setIsOpen(false)} />
+            <NavItemMobile href="/about-us" label="About Us" close={() => setIsOpen(false)} />
+            <NavItemMobile href="/events" label="Events" close={() => setIsOpen(false)} />
+            <NavItemMobile href="/clubs" label="Clubs" close={() => setIsOpen(false)} />
+            <NavItemMobile href="/join-us" label="Join Us" close={() => setIsOpen(false)} />
+            <NavItemMobile href="/contact" label="Contact" close={() => setIsOpen(false)} />
+            <NavItemMobile href="/blog" label="Blog" close={() => setIsOpen(false)} />
           </div>
         </div>
-      )}
-    </nav>
+      </div>
+    </>
   );
 }
+
+/* ================= Desktop Link ================= */
 
 function NavLink({ href, children }) {
   const pathname = usePathname();
@@ -108,10 +120,11 @@ function NavLink({ href, children }) {
   return (
     <Link
       href={href}
-      className={`px-4 py-1 rounded-full text-sm font-medium transition ${
+      className={`relative px-4 py-2 text-sm font-medium rounded-full transition
+      ${
         isActive
-          ? "bg-blue-500 text-white"
-          : "text-black hover:text-blue-600"
+          ? "text-white bg-blue-600"
+          : "text-gray-800 hover:text-blue-600"
       }`}
     >
       {children}
@@ -119,17 +132,21 @@ function NavLink({ href, children }) {
   );
 }
 
-function NavItemMobile({ href, label }) {
+/* ================= Mobile Link ================= */
+
+function NavItemMobile({ href, label, close }) {
   const pathname = usePathname();
   const isActive = pathname === href;
 
   return (
     <Link
       href={href}
-      className={`px-4 py-3 rounded-lg text-base ${
+      onClick={close}
+      className={`px-4 py-3 rounded-lg text-base transition
+      ${
         isActive
           ? "bg-blue-600 text-white"
-          : ""
+          : "text-gray-800 hover:bg-gray-100"
       }`}
     >
       {label}

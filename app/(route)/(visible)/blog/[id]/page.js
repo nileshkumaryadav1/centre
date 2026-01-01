@@ -25,7 +25,7 @@ export default async function BlogPage({ params }) {
     <article className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section */}
       <header className="relative">
-        <div className="max-w-5xl mx-auto px-4 pt-20 pb-12">
+        <div className="max-w-5xl mx-auto px-4 py-10">
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 leading-tight mb-4">
             {blog.title}
           </h1>

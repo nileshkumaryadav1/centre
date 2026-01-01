@@ -54,7 +54,7 @@ const NavItem = ({ href, icon: Icon, label, active }) => {
   return (
     <Link
       href={href}
-      className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all
+      className={`flex flex-col items-center gap-1 py-1 px-3 rounded-full transition-all
         ${
           active
             ? "text-blue-500 bg-blue-50 dark:bg-gray-800"

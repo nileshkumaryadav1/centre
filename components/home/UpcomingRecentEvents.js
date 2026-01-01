@@ -38,7 +38,7 @@ export default function UpcomingRecentEvents() {
         </div>
 
         {/* ================= CARDS ================= */}
-        <div className="flex justify-center gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           <EventCard
             title="🎉 CentreFest 2026"
             date="March 2026"
